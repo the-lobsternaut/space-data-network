@@ -1,0 +1,117 @@
+Kevin Simback @KSimback
+Give your Openclaw the Memory it Needs (Full Guide)
+
+This guide covers the three common ways memory fails, the configuration changes that fix most issues, and the advanced tools (QMD, Mem0, Cognee, Obsidian) that make memory production-grade.
+
+## The Three Common Memory Failures
+
+### Failure Mode 1: Memory Is Never Saved
+Agent decides what to save — important context slips through because the model deemed it not worth storing.
+
+### Failure Mode 2: Memory Is Saved But Never Retrieved
+Even when facts make it to disk, the agent answers from context window instead of searching memory.
+
+### Failure Mode 3: Context Compaction Destroys Knowledge
+Older messages get summarized or removed to avoid token limits. Info only in active conversation is destroyed. Even MEMORY.md content loaded at session start can get summarized away.
+
+## Basic Fixes
+
+### 1. Enable Memory Flush (Critical)
+Triggers a silent turn before compaction that prompts agent to write durable memories to disk.
+
+```json
+{
+  "compaction": {
+    "memoryFlush": {
+      "enabled": true,
+      "softThresholdTokens": 40000,
+      "prompt": "Distill this session to memory/YYYY-MM-DD.md. Focus on decisions, state changes, lessons, blockers. If nothing: NO_FLUSH",
+      "systemPrompt": "Extract only what is worth remembering. No fluff."
+    }
+  }
+}
+```
+
+Key: customize the prompt, raise softThresholdTokens to 40000 to trigger flushes earlier.
+
+### 2. Configure Context Pruning
+```json
+{
+  "contextPruning": {
+    "mode": "cache-ttl",
+    "ttl": "6h",
+    "keepLastAssistants": 3
+  }
+}
+```
+
+### 3. Enable Hybrid Search
+```json
+{
+  "memorySearch": {
+    "enabled": true,
+    "sources": ["memory", "sessions"],
+    "query": {
+      "hybrid": {
+        "enabled": true,
+        "vectorWeight": 0.7,
+        "textWeight": 0.3
+      }
+    }
+  }
+}
+```
+
+BM25 catches exact matches (error codes, project names) that vector search misses.
+
+### 4. Index Past Sessions
+```json
+{
+  "memorySearch": {
+    "sources": ["memory", "sessions"]
+  },
+  "experimental": {
+    "sessionMemory": true
+  }
+}
+```
+
+## Advanced Memory Solutions
+
+### QMD (by @tobi, CEO of Shopify)
+- Opt-in replacement for built-in SQLite indexer
+- Local sidecar: BM25 + vectors + reranking
+- Can index external document collections (Obsidian vault, project docs, Notion exports)
+
+### Mem0 (YC-backed)
+- Stores memories outside context window — compaction cannot destroy them
+- Auto-Capture: detects and stores info without depending on LLM judgment
+- Auto-Recall: searches and injects relevant memories before agent responds
+- Solves Failure Modes 1 and 3 completely
+- Installs as OpenClaw plug-in
+
+### Cognee: Knowledge Graphs
+- Builds knowledge graph from data
+- Queries relationships between entities
+- Good for enterprise/multi-agent teams
+- Requires Docker
+
+### Obsidian Integration
+Option 1: Symlink memory folder
+```bash
+ln -s ~/workspace/memory ~/Obsidian/AgentMemory
+```
+
+Option 2: Index vault via QMD (recommended)
+- Everything in Obsidian becomes searchable by agents
+- Obsidian 1.12 CLI allows metadata queries (cheaper than reading full files)
+
+## Multi-Agent Memory Architecture
+
+Layer 1: Private memory per agent (own workspace, MEMORY.md, daily notes)
+Layer 2: Shared reference files (_shared/ directory — user profile, agent roster, conventions)
+Layer 3: QMD with shared paths (agents search same reference docs, private memory stays private)
+Layer 4: Coordination ("Chief of Staff" agent reads core files at session start, maintains consistency)
+
+## Key Takeaway
+Stop expecting memory to be automatic — it isn't. Configure it explicitly.

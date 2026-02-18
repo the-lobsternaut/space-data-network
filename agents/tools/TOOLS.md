@@ -53,6 +53,19 @@
 | Discord Bot | Server management, token-gating | `DISCORD_BOT_TOKEN` |
 | Collab.Land | Token-gated roles in Discord | collab.land integration |
 
+## Memory Tools
+
+> See `agents/skills/memory-management.md` for full configuration details.
+
+| Tool | Purpose | Status | Notes |
+| --- | --- | --- | --- |
+| Built-in memory flush | Saves context before compaction | **Configure first** | Most impactful single change |
+| Built-in hybrid search | Vector + BM25 retrieval | **Configure first** | Catches exact + conceptual matches |
+| QMD | Superior retrieval backend (BM25 + vectors + reranking) | Evaluate | By @tobi (Shopify CEO), indexes external docs |
+| Mem0 | Compaction-proof external memory | Evaluate | Auto-capture + auto-recall, YC-backed |
+| Cognee | Knowledge graph from data | Evaluate later | Entity relationships, requires Docker |
+| Obsidian | External brain, cross-device review | Evaluate | Symlink or QMD index approach |
+
 ## Environment Variable Template
 
 Create a `.env` file (NEVER commit this):

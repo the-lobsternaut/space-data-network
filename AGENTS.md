@@ -44,6 +44,7 @@ Every agent follows this cycle after each task:
 
 - `agents/skills/shared/code-review.md` — Agent-to-agent review standards
 - `agents/skills/shared/testing.md` — Testing patterns across all domains
+- `agents/skills/memory-management.md` — Memory config, failure prevention, advanced tools
 - `agents/memory/MEMORY.md` — Cross-agent learnings
 - `agents/tools/TOOLS.md` — Available tool configurations and API keys
 

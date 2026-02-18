@@ -3,6 +3,10 @@
 > Reviewed nightly by DocumentationAgent.
 > Patterns confirmed across 3+ interactions get promoted to skill files.
 > One-off observations kept for 1 week, then removed if not confirmed.
+>
+> **CRITICAL**: Memory is not automatic. See `agents/skills/memory-management.md` for
+> configuration that prevents the three failure modes (never saved, never retrieved,
+> compaction destroys). All agents must follow the memory flush and retrieval protocols.
 
 ## Format
 
