@@ -3,10 +3,23 @@
 > This file is the map, not the encyclopedia. ~100 lines. Injected into every agent context.
 > Deep documentation lives in `docs/`. Agent skills live in `agents/skills/`.
 
+## Canonical Files
+
+| File | Purpose |
+| --- | --- |
+| `SOUL.md` | Personality, behavior, and boundaries |
+| `IDENTITY.md` | Agent name, role, and team structure |
+| `USER.md` | Owner profile and preferences |
+| `AGENTS.md` | This file — operating instructions and rules |
+| `TOOLS.md` | → `agents/tools/TOOLS.md` — apps, APIs, services |
+| `MEMORY.md` | → `agents/memory/MEMORY.md` — decisions, lessons |
+| `SKILLS.md` | Skill index — how to do things |
+| `HEARTBEAT.md` | Periodic wake-up tasks and schedules |
+| `ARCHITECTURE.md` | Domain map and dependency rules |
+| `STRATEGIC_PLAN.md` | Business strategy and roadmap |
+
 ## Quick Reference
 
-- **Strategic Plan**: `STRATEGIC_PLAN.md`
-- **Architecture**: `ARCHITECTURE.md`
 - **Golden Principles**: `docs/design-docs/core-beliefs.md`
 - **Active Tasks**: `tasks/todo.md`
 - **Lessons Learned**: `tasks/lessons.md`
