@@ -115,46 +115,329 @@ Actions:
 
 ## How Heartbeats Execute
 
-On the Mac Mini, heartbeats are implemented as `launchd` scheduled jobs or cron entries:
+On macOS, use native **LaunchAgents** instead of cron. LaunchAgents are built-in, more
+reliable, survive reboots, and support richer trigger types than cron.
+
+### launchd Trigger Types
+
+| Trigger | Use When | Example |
+| --- | --- | --- |
+| `StartCalendarInterval` | Run at a specific time of day/week | Daily report at 9 AM |
+| `StartInterval` | Run on a fixed interval (seconds) | Every 4 hours = 14400 seconds |
+| `WatchPaths` | Run when a file/folder changes | Auto-push on save |
+| `RunAtLoad` | Run once at login/boot | Agent startup |
+
+### LaunchAgent Plists
+
+All plists go in `~/Library/LaunchAgents/`. Load with `launchctl load <plist>`.
+
+#### Content Check (every 4 hours)
+
+File: `~/Library/LaunchAgents/com.openclaw.content-check.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.content-check</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh content-check</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>14400</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-content-check.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-content-check.err</string>
+</dict>
+</plist>
+```
+
+#### Memory Hygiene (every 6 hours)
+
+File: `~/Library/LaunchAgents/com.openclaw.memory-hygiene.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.memory-hygiene</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh memory-hygiene</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>21600</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-memory-hygiene.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-memory-hygiene.err</string>
+</dict>
+</plist>
+```
+
+#### Build Health (every 12 hours)
+
+File: `~/Library/LaunchAgents/com.openclaw.build-health.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.build-health</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh build-health</string>
+    </array>
+    <key>StartInterval</key>
+    <integer>43200</integer>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-build-health.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-build-health.err</string>
+</dict>
+</plist>
+```
+
+#### Daily Performance Report (9 AM)
+
+File: `~/Library/LaunchAgents/com.openclaw.daily-report.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.daily-report</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh daily-report</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-daily-report.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-daily-report.err</string>
+</dict>
+</plist>
+```
+
+#### Nightly Memory Review (11 PM)
+
+File: `~/Library/LaunchAgents/com.openclaw.nightly-review.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.nightly-review</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh nightly-review</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>23</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-nightly-review.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-nightly-review.err</string>
+</dict>
+</plist>
+```
+
+#### Weekly Quality Audit (Sunday 10 AM)
+
+File: `~/Library/LaunchAgents/com.openclaw.weekly-audit.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.weekly-audit</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh weekly-audit</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>0</integer>
+        <key>Hour</key>
+        <integer>10</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-weekly-audit.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-weekly-audit.err</string>
+</dict>
+</plist>
+```
+
+#### Weekly Token Metrics (Monday 9 AM)
+
+File: `~/Library/LaunchAgents/com.openclaw.weekly-metrics.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.weekly-metrics</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh weekly-metrics</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>1</integer>
+        <key>Hour</key>
+        <integer>9</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-weekly-metrics.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-weekly-metrics.err</string>
+</dict>
+</plist>
+```
+
+#### Weekly Skill Review (Friday 3 PM)
+
+File: `~/Library/LaunchAgents/com.openclaw.weekly-skills.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.weekly-skills</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh weekly-skills</string>
+    </array>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Weekday</key>
+        <integer>5</integer>
+        <key>Hour</key>
+        <integer>15</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-weekly-skills.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-weekly-skills.err</string>
+</dict>
+</plist>
+```
+
+#### Auto-Push on File Changes (WatchPaths)
+
+File: `~/Library/LaunchAgents/com.openclaw.auto-sync.plist`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.openclaw.auto-sync</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>-c</string>
+        <string>/path/to/openclaw/heartbeat.sh auto-sync</string>
+    </array>
+    <key>WatchPaths</key>
+    <array>
+        <string>/path/to/lobsternaut/agents/memory</string>
+        <string>/path/to/lobsternaut/tasks</string>
+    </array>
+    <key>StandardOutPath</key>
+    <string>/tmp/openclaw-auto-sync.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/openclaw-auto-sync.err</string>
+</dict>
+</plist>
+```
+
+### Loading All LaunchAgents
 
 ```bash
-# Example crontab entries
-# Content check every 4 hours during active hours
-0 8,12,16,20 * * * /path/to/openclaw/heartbeat.sh content-check
+# Load all OpenClaw LaunchAgents
+for plist in ~/Library/LaunchAgents/com.openclaw.*.plist; do
+  launchctl load "$plist"
+done
 
-# Memory hygiene every 6 hours
-0 0,6,12,18 * * * /path/to/openclaw/heartbeat.sh memory-hygiene
+# Verify they are running
+launchctl list | grep openclaw
 
-# Build health every 12 hours
-0 6,18 * * * /path/to/openclaw/heartbeat.sh build-health
+# Unload a specific agent
+launchctl unload ~/Library/LaunchAgents/com.openclaw.content-check.plist
 
-# Daily performance report at 9 AM EST
-0 9 * * * /path/to/openclaw/heartbeat.sh daily-report
-
-# Nightly memory review at 11 PM EST
-0 23 * * * /path/to/openclaw/heartbeat.sh nightly-review
-
-# Weekly quality audit Sunday 10 AM
-0 10 * * 0 /path/to/openclaw/heartbeat.sh weekly-audit
-
-# Weekly metrics Monday 9 AM
-0 9 * * 1 /path/to/openclaw/heartbeat.sh weekly-metrics
-
-# Weekly skill review Friday 3 PM
-0 15 * * 5 /path/to/openclaw/heartbeat.sh weekly-skills
+# Check logs
+tail -f /tmp/openclaw-*.log
 ```
+
+### Why LaunchAgents Over Cron
+
+- **Built into macOS** — no third-party scheduler needed
+- **Survives reboots** — `RunAtLoad` triggers on login
+- **Richer triggers** — `WatchPaths` fires on file changes (cron can't do this)
+- **Catches up on missed runs** — if Mac was asleep, launchd runs it on wake
+- **Per-job logging** — each plist has its own stdout/stderr paths
+- **Easy management** — `launchctl load/unload` to start/stop
 
 ## Adding a New Heartbeat
 
-1. Define the trigger (frequency and time)
+1. Define the trigger type (`StartInterval`, `StartCalendarInterval`, `WatchPaths`, or `RunAtLoad`)
 2. Assign the owning agent
-3. List the specific actions (numbered, concrete)
-4. Add to this file
-5. Add the cron entry to the Mac Mini
-6. Test with a manual trigger first
+3. List the specific actions (numbered, concrete) in the schedule section above
+4. Create the plist in `~/Library/LaunchAgents/com.openclaw.<name>.plist`
+5. Load it: `launchctl load ~/Library/LaunchAgents/com.openclaw.<name>.plist`
+6. Test with a manual trigger: `/path/to/openclaw/heartbeat.sh <name>`
+7. Check logs: `tail /tmp/openclaw-<name>.log`
 
 ## Heartbeat Log
 
 > Track heartbeat execution history for debugging missed runs.
 
-_No executions yet. Begin logging when cron jobs are configured._
+_No executions yet. Begin logging when LaunchAgents are configured._
