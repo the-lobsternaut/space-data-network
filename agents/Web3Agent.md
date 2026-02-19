@@ -160,6 +160,28 @@ What triggered the Web3Agent?
 
 Detailed rules, deployment checklists, security patterns: `agents/skills/web3-integration.md`
 
+## Scope
+
+Explicit file path patterns this agent owns:
+
+```
+src/contracts/**                    # Smart contracts
+src/web3/**                         # Web3 integration code
+src/payments/**                     # Stripe and Coinbase Commerce
+agents/skills/web3-integration.md   # Own skill file
+docs/design-docs/token-strategy.md  # Token strategy doc
+docs/design-docs/payment-integration.md  # Payment architecture doc
+docs/product-specs/tiered-access.md      # Access tier spec
+```
+
+Files outside these patterns require justification in the handoff.
+
+## Handoff
+
+Every task completion produces a structured handoff per `agents/skills/shared/handoff-protocol.md`.
+
+Required fields: status, summary, acceptance checked, files changed, scope compliance, concerns, suggestions.
+
 ## Interaction with Other Agents
 
 - **BuildAgent**: Coordinates WASM access control integration

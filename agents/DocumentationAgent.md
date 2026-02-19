@@ -90,6 +90,60 @@ Is there a code change since last doc review?
 
 Detailed rules, failure logs, and patterns: `agents/skills/documentation.md`
 
+## Scope
+
+Explicit file path patterns this agent owns:
+
+```
+docs/**                          # All documentation
+agents/memory/MEMORY.md          # Memory hygiene responsibility
+agents/skills/documentation.md   # Own skill file
+ARCHITECTURE.md                  # Domain map maintenance
+QUALITY_SCORE.md                 # Quality scoring
+```
+
+Files outside these patterns require justification in the handoff.
+
+## Reconciliation Loop
+
+The DocumentationAgent runs a self-healing sweep during every heartbeat weekly-audit and nightly-review:
+
+### Sweep Phase
+
+1. Validate all cross-links — do `[text](path)` patterns resolve to real files?
+2. Check for drift — have code files changed since their docs were last updated?
+3. Verify index files — is every doc in a directory listed in its index.md?
+4. Check for orphaned docs — are there files not referenced from anywhere?
+5. Verify examples — do code examples in docs still match current API signatures?
+
+### Classify Phase
+
+Group issues by root cause:
+- **Broken link**: Target file moved or deleted → 1 fix task per cluster
+- **Drift**: Code changed, docs didn't → 1 fix task per module
+- **Missing index entry**: New doc not listed → 1 fix task
+- **Stale example**: Code example uses old API → 1 fix task per doc
+- **Orphaned doc**: No references point to it → investigate (may need linking or removal)
+
+### Emit Fix Tasks
+
+- Max 5 fix tasks per sweep
+- Each task includes: specific broken link/drift/gap, affected files (max 3), acceptance criteria
+- Format: `[FIX-NNN] Description — acceptance: "all links valid, no drift detected for module X"`
+- Don't re-emit fixes for scopes already being fixed (check tasks/todo.md)
+
+### Adaptive Frequency
+
+- On issues found: schedule follow-up check in 2 hours
+- On 3+ consecutive clean sweeps: return to normal interval
+- On persistent issues (3+ sweeps): escalate to owner
+
+## Handoff
+
+Every task completion produces a structured handoff per `agents/skills/shared/handoff-protocol.md`.
+
+Required fields: status, summary, acceptance checked, files changed, scope compliance, concerns, suggestions.
+
 ## Interaction with Other Agents
 
 - **PlanningAgent**: Receives execution plans to verify documentation completeness

@@ -16,6 +16,9 @@
 | `SKILLS.md` | Skill index — how to do things |
 | `HEARTBEAT.md` | Periodic wake-up tasks and schedules |
 | `ARCHITECTURE.md` | Domain map and dependency rules |
+| `SPEC.md` | Technical specification — binding contract |
+| `DECISIONS.md` | Architecture decision log |
+| `ENTRY_POINT.md` | Agent onboarding — read order and ownership |
 | `STRATEGIC_PLAN.md` | Business strategy and roadmap |
 
 ## Quick Reference
@@ -57,6 +60,7 @@ Every agent follows this cycle after each task:
 
 - `agents/skills/shared/code-review.md` — Agent-to-agent review standards
 - `agents/skills/shared/testing.md` — Testing patterns across all domains
+- `agents/skills/shared/handoff-protocol.md` — Structured task result format
 - `agents/skills/memory-management.md` — Memory config, failure prevention, advanced tools
 - `agents/memory/MEMORY.md` — Cross-agent learnings
 - `agents/tools/TOOLS.md` — Available tool configurations and API keys

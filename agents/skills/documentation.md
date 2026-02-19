@@ -114,6 +114,26 @@ Every OrbPro public API function must document:
 - Performance characteristics (time complexity, memory usage for large inputs)
 - Thread safety status
 
+## Definition of Done — Documentation Tasks
+
+A documentation task is complete when ALL of the following are verified:
+
+- [ ] No broken cross-links (every `[text](path)` resolves to a real file)
+- [ ] New docs are listed in their directory's `index.md`
+- [ ] Code examples compile and produce correct output (or are marked as pseudocode)
+- [ ] Technical claims are verified against actual code (no drift)
+- [ ] Reference frames, time systems, and units are specified (R-011)
+- [ ] Design docs have status (Active/Draft/Superseded/Archived) per R-004
+- [ ] Quality score updated in `docs/QUALITY_SCORE.md` if grades changed
+- [ ] No orphaned docs (every doc referenced from at least one other doc)
+- [ ] Handoff produced per `agents/skills/shared/handoff-protocol.md`
+
+For memory hygiene tasks specifically:
+- [ ] Patterns confirmed 3+ times promoted to skill files
+- [ ] One-off observations older than 1 week removed
+- [ ] No memory entries contradicting existing skill rules
+- [ ] Promotions and removals logged to `tasks/lessons.md`
+
 ## Failure Log
 
 > Document every documentation failure here so we don't repeat it.

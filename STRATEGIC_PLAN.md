@@ -55,186 +55,48 @@ The flagship feature is **conjunction assessment and collision avoidance**—cri
 
 ## 3. Technical Architecture
 
-### 3.1 OrbPro C++ Library
+This section now references canonical architecture docs to avoid duplicate implementation detail:
 
-OrbPro is the core computational engine residing in the `../OrbPro` directory, structured as a modular C++ library with the following components:
-
-#### Core Modules
-
-| Module | Capabilities |
-|--------|--------------|
-| **Propagation** | Keplerian propagation, SGP4/SDP4, numerical integrators (RK4, RK78, Adams-Bashforth), perturbation models (J2-J6, drag, solar radiation pressure, third-body) |
-| **Coordinates** | ECI/ECEF transformations, J2000/TOD/MOD/GCRF frames, time systems (UTC, UT1, TAI, TT, GPS), geodetic conversions (WGS84, ITRF) |
-| **Optimization** | Lambert's problem (Izzo/Gooding algorithms), Hohmann/bi-elliptic transfers, low-thrust trajectory optimization, multiple shooting methods |
-| **Conjunction** ⭐ | **FLAGSHIP**: CDM parsing, probability of collision (Foster 1992, Patera 2005, Alfriend 2D/3D methods), screening volumes, miss distance calculation, conjunction geometry visualization, collision avoidance maneuver planning, Monte Carlo risk assessment |
-| **Mission Analysis** | Ground track generation, ground station access windows, line-of-sight analysis, eclipse prediction, revisit time calculation, orbit maintenance ΔV budgets |
-
-#### Development Standards
-
-- **Language**: C++17/20 with modern idioms (smart pointers, move semantics, constexpr)
-- **Build System**: CMake 3.20+ with Emscripten toolchain for WASM targets
-- **Dependencies**: Eigen (linear algebra), Boost (utilities), SOFA (time/coordinate standards)
-- **Testing**: Google Test framework, validation against STK/GMAT/OREKIT results, CI/CD with GitHub Actions
-- **Documentation**: Doxygen API docs, Sphinx user guides, Jupyter notebooks for tutorials
-
-### 3.2 WebAssembly Compilation Pipeline
-
-OrbPro compiles to WebAssembly using Emscripten, enabling browser-native performance for orbital mechanics calculations without server round-trips.
-
-#### Build Configuration
-
-- **Compiler Flags**: `-O3 -s WASM=1 -s ALLOW_MEMORY_GROWTH=1`
-- **SIMD Support**: Enable SIMD128 for vector operations in propagators
-- **Threading**: SharedArrayBuffer + Web Workers for parallel orbit propagation
-- **Bindings**: Embind for clean C++ → JavaScript API with TypeScript definitions
-- **Module Formats**: ES6 modules, CommonJS, UMD for universal compatibility
-- **File System**: MEMFS for in-browser TLE/CDM file loading
-
-#### JavaScript API Wrapper
-
-Provide idiomatic JavaScript interface abstracting WASM complexity:
-
-```javascript
-import { Propagator, ConjunctionAnalyzer } from '@openclaw/orbpro';
-
-const sat = new Propagator(tle);
-const states = await sat.propagate(startTime, endTime, stepSize);
-
-const cdm = await fetch('conjunction.cdm').then(r => r.text());
-const analyzer = new ConjunctionAnalyzer(cdm);
-const pc = analyzer.calculateCollisionProbability('foster1992');
-```
+- [OrbPro architecture and module graph](docs/design-docs/orbpro-architecture.md)
+- [WASM compilation pipeline](docs/design-docs/wasm-pipeline.md)
+- [Conjunction flagship spec](docs/product-specs/conjunction-assessment.md)
+- [Repository layering rules](ARCHITECTURE.md)
 
 ---
 
 ## 4. Multi-Chain Token Strategy
 
-### 4.1 Token Deployment Plan
+Canonical token design is maintained in `docs/design-docs/token-strategy.md`.
 
-| Chain | Primary Use Case | Deployment Method |
-|-------|------------------|-------------------|
-| **Base** | Community hub, low fees, AI agent ecosystem | Bankr bot or Clanker (fast deploy), ERC-20 standard |
-| **Solana** | High-frequency API usage, microtransactions | Token-2022 program with transfer fees, Jupiter listing |
-| **Ethereum** | Institutional holders, DeFi liquidity, credibility | Custom ERC-20 with OpenZeppelin, Uniswap V3 pool |
-| **Bitcoin** | Donations, long-term value store | Native address for BTC donations (future: Ordinals/Runes) |
+Strategic defaults remain:
 
-### 4.2 Tokenomics Design
-
-- **Ticker**: $CLAW (consistent across all chains)
-- **Total Supply**: 1,000,000,000 tokens (1B total across all chains)
-- **Distribution**: 40% Public Sale, 25% Liquidity Pools, 20% Development Treasury, 10% Team (2-year vest), 5% Community Rewards
-- **Deflationary Mechanics**: 0.5% burn on transactions, 5% burn when redeeming for API credits
-- **Utility**: Tiered feature access, API rate limits, governance voting, compute credit redemption
-
-### 4.3 Cross-Chain Strategy
-
-**Recommended Approach**: Start with **separate tokens** per chain (same ticker $CLAW), evaluate bridging later based on demand.
-
-**Benefits:**
-- Simpler to deploy and manage
-- Independent communities per ecosystem
-- No bridge security risks
-- Can still move value via DEX swaps
+- Separate tokens per chain at launch (Base, Solana, Ethereum), with Bitcoin donation support
+- Fixed 1,000,000,000 total supply policy and no minting
+- 0.5% transfer burn with 5% API-redemption burn
+- Token holdings compete with subscriptions via the same access matrix
 
 ---
 
 ## 5. Payment Integration Strategy
 
-To onboard mainstream users unfamiliar with cryptocurrency, OpenClaw integrates traditional payment processors alongside native crypto payments.
+Payment implementation details now live in `docs/design-docs/payment-integration.md`.
 
-### 5.1 Stripe Integration
+Implementation defaults remain:
 
-**Purpose**: Primary fiat on-ramp for credit/debit card payments from users who don't have crypto wallets.
-
-#### Implementation Architecture
-
-- **Stripe Checkout**: Hosted payment page for subscription tiers (Free, Bronze, Silver, Gold)
-- **Subscription Tiers**: $9.99/month (Bronze), $29.99/month (Silver), $99.99/month (Gold)
-- **Backend**: Node.js/Express server handling webhooks, user authentication via SIWE (Sign-In With Ethereum)
-- **Database**: PostgreSQL storing user subscriptions linked to wallet addresses
-- **Feature Unlocking**: API middleware checks subscription status OR token balance for access control
-
-#### User Flow - Fiat Payment
-
-1. User connects wallet (MetaMask/Phantom) to authenticate identity
-2. Selects subscription tier and clicks "Pay with Card"
-3. Redirected to Stripe Checkout, enters credit card details
-4. Payment processed, webhook confirms subscription
-5. Backend updates database: wallet address ↔ subscription tier
-6. User immediately gains access to premium features
-
-### 5.2 Coinbase Commerce Integration
-
-**Purpose**: Accept cryptocurrency payments (BTC, ETH, USDC, SOL) without requiring token purchases—for users who have crypto but not $CLAW tokens.
-
-#### Implementation Architecture
-
-- **Coinbase Commerce API**: Create payment charges for one-time or recurring subscriptions
-- **Supported Cryptos**: BTC, ETH, USDC, USDT, SOL, MATIC (user chooses which to pay with)
-- **Webhook Integration**: Real-time payment confirmation triggers subscription activation
-- **Pricing**: Same USD equivalent as Stripe tiers ($9.99, $29.99, $99.99)
-
-#### User Flow - Crypto Payment
-
-1. User connects wallet and selects subscription tier
-2. Clicks "Pay with Crypto" → Coinbase Commerce modal
-3. Chooses payment currency (ETH, BTC, USDC, etc.)
-4. Sends payment from any wallet (Coinbase Commerce provides address)
-5. Webhook confirms payment, backend activates subscription
-6. User gains access to premium features
-
-### 5.3 Hybrid Access Model
-
-Users can access premium features through **EITHER** token holdings **OR** paid subscriptions—whichever threshold they meet:
-
-```javascript
-if (tokenBalance >= GOLD_THRESHOLD || subscription === 'gold') {
-  grantAccess('unlimited API, mission planning, priority support');
-}
-```
-
-This dual-path strategy maximizes accessibility:
-
-- **Crypto-native users**: Buy and hold $CLAW tokens (one-time purchase, permanent access if holding)
-- **Mainstream users**: Pay monthly with credit card via Stripe (familiar, no crypto learning curve)
-- **Crypto holders (non-$CLAW)**: Pay with BTC/ETH/USDC via Coinbase Commerce (no need to acquire $CLAW)
-
----
+- Stripe for card-based subscriptions at existing tier pricing
+- Coinbase Commerce for BTC/ETH/USDC/USDT/SOL/MATIC payments
+- Entitlement is resolved by max(token_tier, subscription_tier) after webhook confirmation
 
 ## 6. Tiered Feature Access
 
-OpenClaw implements a four-tier access model where features unlock based on token holdings OR active subscriptions:
+OpenClaw tiered access matrix is tracked in `docs/product-specs/tiered-access.md` and is now the canonical source of truth.
 
-### Feature Comparison Matrix
+Operational defaults remain:
 
-| Feature | FREE | BRONZE | SILVER | GOLD |
-|---------|------|--------|--------|------|
-| **Token Hold** | 0 | 10K $CLAW | 50K $CLAW | 200K $CLAW |
-| **OR Subscription** | — | $9.99/mo | $29.99/mo | $99.99/mo |
-| **API Calls/Month** | 100 | 5,000 | 50,000 | **Unlimited** |
-| **Conjunction Analysis** | Basic | Full CDM | Monte Carlo | **Maneuver Plan** |
-| **Mission Planning** | ✗ | ✗ | Ground Track | **Full Suite** |
-| **Discord Access** | Public | Holder | Priority | **1-on-1** |
-| **Early Features** | ✗ | ✗ | 7 days early | **30 days early** |
-| **Governance Voting** | ✗ | 1 vote | 5 votes | **20 votes** |
-
-### 6.1 Feature Unlocking in OrbPro Repository
-
-The `../OrbPro` repository contains modular feature directories. Each module exports its capabilities through the WASM interface with access control checks:
-
-```javascript
-// Example: Conjunction Assessment Module
-export function analyzeConjunction(cdm, method, accessToken) {
-  const tier = verifyAccessTier(accessToken); // Checks token balance OR subscription
-
-  if (tier === 'free') return basicScreening(cdm);
-  if (tier === 'bronze') return fullCDMAnalysis(cdm, method);
-  if (tier === 'silver') return monteCarloRiskAssessment(cdm);
-  if (tier === 'gold') return fullManeuverPlanning(cdm, method);
-
-  throw new Error('Insufficient access tier');
-}
-```
+- FREE: 100 calls/month, basic conjunction screening
+- BRONZE: 5,000 calls/month, full CDM analysis
+- SILVER: 50,000 calls/month, Monte Carlo
+- GOLD: unlimited calls + maneuver planning
 
 ---
 

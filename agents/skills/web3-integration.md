@@ -179,6 +179,38 @@ When adding liquidity to DEXes:
 - Monitor for impermanent loss
 - Document all liquidity positions in `docs/design-docs/token-strategy.md`
 
+## Definition of Done — Web3 Tasks
+
+A Web3 task is complete when ALL of the following are verified:
+
+For token deployments:
+
+- [ ] Deployed to testnet first, minimum 48 hours of testing (R-002)
+- [ ] Chain-specific checklist fully completed (R-003/R-004/R-005)
+- [ ] Contract verified on block explorer
+- [ ] No secrets in repository (R-001)
+- [ ] Security checklist passed (R-009)
+
+For payment integration:
+
+- [ ] Webhook signatures verified on every request (R-006)
+- [ ] Full lifecycle tested: checkout → webhook → active → renewal → cancellation
+- [ ] Idempotent handlers for duplicate webhook deliveries
+- [ ] Database schema matches R-006 specification
+
+For feature gating:
+
+- [ ] Access control logic matches R-008 specification
+- [ ] All tiers tested: Free, Bronze, Silver, Gold
+- [ ] Token balance check uses latest block (not cached for tier determination)
+- [ ] Rate limiting enforced even for highest tier
+- [ ] Wallet addresses validated before processing (R-010)
+
+For all Web3 tasks:
+
+- [ ] Handoff produced per `agents/skills/shared/handoff-protocol.md`
+- [ ] Deployment logged in Deployment Log section below
+
 ## Failure Log
 
 > Deployment failures, payment integration issues, security incidents.

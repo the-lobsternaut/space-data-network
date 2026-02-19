@@ -426,6 +426,58 @@ tail -f /tmp/openclaw-*.log
 - **Per-job logging** — each plist has its own stdout/stderr paths
 - **Easy management** — `launchctl load/unload` to start/stop
 
+## Adaptive Frequency
+
+> Adopted from agentswarm's Reconciler pattern. Fixed intervals miss urgent issues.
+> Adaptive frequency responds fast to breakage and backs off when healthy.
+
+### How It Works
+
+Heartbeats that perform health checks (build-health, weekly-audit, nightly-review) support
+adaptive frequency adjustment:
+
+**On error detection**:
+1. Log the error and classify by root cause
+2. Emit fix tasks (max 5 per sweep) to `tasks/todo.md`
+3. Schedule a follow-up check in 30 minutes using `launchctl kickstart`
+4. Continue short-interval checks until resolved
+
+**On consecutive greens (3+)**:
+1. Return to the normal scheduled interval
+2. Log "all green" to heartbeat log
+
+**On persistent failure (3+ sweeps with same error)**:
+1. Escalate to owner (Discord notification or email)
+2. Do not keep emitting duplicate fix tasks
+3. Log escalation to heartbeat log
+
+### Implementation via launchctl kickstart
+
+To trigger an immediate re-check after finding errors:
+
+```bash
+# Force an immediate run of a LaunchAgent (does not change the schedule)
+launchctl kickstart gui/$(id -u)/com.openclaw.build-health
+
+# The heartbeat.sh script should:
+# 1. Run the sweep
+# 2. If errors found: write a flag file /tmp/openclaw-<name>-recheck
+# 3. A short-interval watcher plist monitors for the flag file (WatchPaths)
+# 4. Watcher triggers a re-run, then removes the flag
+```
+
+### Applicable Heartbeats
+
+| Heartbeat | Normal Interval | Error Re-check | Escalation Threshold |
+|-----------|----------------|----------------|---------------------|
+| build-health | 12 hours | 30 minutes | 3 consecutive failures |
+| weekly-audit | 7 days | 2 hours | 3 consecutive failures |
+| nightly-review | 24 hours | 4 hours | 3 consecutive failures |
+| content-check | 4 hours | 1 hour | 5 consecutive failures |
+
+Non-health-check heartbeats (daily-report, weekly-metrics, weekly-skills) run on fixed schedules
+and do not use adaptive frequency.
+
 ## Adding a New Heartbeat
 
 1. Define the trigger type (`StartInterval`, `StartCalendarInterval`, `WatchPaths`, or `RunAtLoad`)

@@ -37,6 +37,38 @@ Before marking any task done:
 - [ ] Ask: "Would a staff engineer approve this?"
 - [ ] If any answer is "no" or "not sure", don't mark it done
 
+### R-011: Enforce Completion Re-check Before Exit
+
+When a task has multiple steps or open acceptance criteria, perform one explicit re-check pass before handing off.
+If anything is still pending, continue execution even if the agent would normally stop.
+
+Minimum re-check prompt:
+- Are all requested outcomes complete?
+- Are all required outputs produced (code/docs/notes)?
+- Are errors and edge cases resolved or explicitly deferred?
+- Are follow-on risks captured in `tasks/todo.md` or `tasks/lessons.md`?
+
+### R-012: Taskmaster-Lite Manual Completion Gate (No Hooks Required)
+
+Before ending any non-trivial task, run this manual gate in the final response:
+
+1. Paste a quick status line for each objective: `done`, `partial`, or `blocked`.
+2. Confirm all checks are answered `Yes`:
+   - Diff matches requested scope and intent.
+   - Acceptance criteria are checked and met or explicitly deferred.
+   - Side effects or risks are logged in `tasks/todo.md` or `tasks/lessons.md`.
+   - If there are unknowns, ask for user direction before marking the task complete.
+3. If any item is not `done`, continue the task rather than closing it.
+
+#### Required Final format for this repository
+
+Use exactly these fields before handoff:
+
+- `Completion Gate`: PASS / BLOCK
+- `Outstanding Items`: `<brief list or 'none'>`
+- `Deferral Notes`: `<brief or 'none'>`
+- `Next Risk`: `<if BLOCK, describe one highest-priority risk>`
+
 ### R-005: Lessons Are Logged Immediately
 
 Don't batch lessons. After every task completion (or failure):
@@ -188,6 +220,26 @@ When investigating an issue or exploring the codebase:
 | Date | Decision | Rationale | Alternatives |
 | --- | --- | --- | --- |
 ```
+
+## Definition of Done — Planning Tasks
+
+A planning task is complete when ALL of the following are verified:
+
+- [ ] Execution plan written to `docs/exec-plans/active/` with all required sections
+- [ ] All steps in the plan are actionable (specific files, specific changes, specific acceptance criteria)
+- [ ] Decision log populated for every choice between alternatives (R-006)
+- [ ] Review stages completed sequentially: Architecture → Code Quality → Tests → Performance (R-008)
+- [ ] Issues numbered, options lettered, recommended option first (R-007)
+- [ ] Scope creep detected and logged as separate tasks (R-009)
+- [ ] "Would a staff engineer approve this plan?" — answer must be yes (R-004)
+- [ ] Handoff produced per `agents/skills/shared/handoff-protocol.md`
+
+For execution tracking tasks specifically:
+
+- [ ] All plan steps have completion status (checked or unchecked)
+- [ ] Completed plans moved to `docs/exec-plans/completed/`
+- [ ] Lessons logged for every correction made during execution (R-005)
+- [ ] Handoff concerns from other agents reviewed and tracked
 
 ## Failure Log
 

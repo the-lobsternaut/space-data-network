@@ -181,6 +181,27 @@ When a build fails, classify and respond:
 | Namespace | lowercase | `orbpro::propagation` |
 | CMake target | lowercase-hyphen | `orbpro-propagation` |
 
+## Definition of Done — Build Tasks
+
+A build task is complete when ALL of the following are verified:
+
+- [ ] C++ code compiles without errors on all target platforms
+- [ ] All unit tests pass (< 30 second runtime)
+- [ ] All validation tests pass within R-004 tolerances
+- [ ] WASM build succeeds via Emscripten
+- [ ] WASM integration tests pass in headless browser
+- [ ] Bundle size is within budget (R-006): core < 500 KB gzipped
+- [ ] TypeScript definitions are auto-generated and current (R-007)
+- [ ] Lint is clean (clang-tidy, clang-format)
+- [ ] No new warnings introduced
+- [ ] If API surface changed: DocumentationAgent notified via handoff suggestion
+- [ ] Handoff produced per `agents/skills/shared/handoff-protocol.md`
+
+For CI/CD changes specifically:
+- [ ] Pipeline runs end-to-end on a test push
+- [ ] All required checks pass
+- [ ] Build time is under 10 minutes
+
 ## Failure Log
 
 > Build failures and their resolutions.

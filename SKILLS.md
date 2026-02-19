@@ -16,6 +16,7 @@
 | Memory Management | `agents/skills/memory-management.md` | ~250 | Memory config, flush, retrieval, advanced tools |
 | Code Review | `agents/skills/shared/code-review.md` | ~80 | Agent-to-agent review standards |
 | Testing | `agents/skills/shared/testing.md` | ~100 | Test patterns across all domains |
+| Handoff Protocol | `agents/skills/shared/handoff-protocol.md` | ~180 | Structured task results between agents |
 
 ## How Skills Work
 

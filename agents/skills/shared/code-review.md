@@ -65,6 +65,15 @@ SEVERITY levels:
 - NOTE: Informational. No action required.
 ```
 
+### 5. Scope Validation
+
+The reviewing agent checks scope compliance:
+
+- [ ] All changed files are within the agent's declared scope (see agent definition `## Scope` section)
+- [ ] If files outside scope were touched, the handoff includes explicit justification
+- [ ] Cross-agent file modifications are flagged for the owning agent's review
+- [ ] Scope violations without justification are a BLOCKER
+
 ## When to Escalate to Human
 
 - Security-sensitive changes (auth, crypto, payment handling)

@@ -117,6 +117,24 @@ What type of content is needed?
 
 Detailed rules, hook formulas, failure log, performance data: `agents/skills/content-generation.md`
 
+## Scope
+
+Explicit file path patterns this agent owns:
+
+```
+content/**                              # Content drafts and assets
+agents/skills/content-generation.md     # Own skill file
+docs/product-specs/social-media-strategy.md  # Content strategy doc
+```
+
+Files outside these patterns require justification in the handoff.
+
+## Handoff
+
+Every task completion produces a structured handoff per `agents/skills/shared/handoff-protocol.md`.
+
+Required fields: status, summary, acceptance checked, files changed, scope compliance, concerns, suggestions.
+
 ## Interaction with Other Agents
 
 - **DocumentationAgent**: Requests verified technical facts for content accuracy

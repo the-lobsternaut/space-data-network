@@ -140,6 +140,28 @@ After every post:
 | **High Views** | SCALE IT: Generate 3 variations of this hook | CTA problem: Keep hook, rotate CTA |
 | **Low Views** | Hook problem: Keep CTA, test stronger hooks | DROP IT: Try radically different approach |
 
+## Definition of Done — Content Tasks
+
+A content task is complete when ALL of the following are verified:
+
+- [ ] Hook formula applied (R-001): curiosity + stakes + relatability
+- [ ] Content is about other people, not "I" or "we" (R-002)
+- [ ] Storytelling format used, not feature lists (R-003)
+- [ ] Platform-specific formatting correct (R-004): character limits, image specs, text positioning
+- [ ] CTA included and rotated per current strategy (R-007)
+- [ ] Educational content facts verified against R-006 library or cited source
+- [ ] Performance tracking template prepared (R-009)
+- [ ] Content queued as draft (not auto-published without review)
+- [ ] Handoff produced per `agents/skills/shared/handoff-protocol.md`
+
+For analytics review tasks specifically:
+
+- [ ] 2x2 diagnostic matrix applied to each post (R-010)
+- [ ] Underperformers diagnosed (hook problem vs CTA problem vs drop)
+- [ ] Winners identified for scaling (generate 3 variations)
+- [ ] Skill file updated with new patterns/failures
+- [ ] Lessons logged to `tasks/lessons.md`
+
 ## Failure Log
 
 > Hooks that flopped, CTAs that didn't convert, approaches that failed.

@@ -150,6 +150,28 @@ New task arrives:
 
 Detailed review rules, planning templates, workflow patterns: `agents/skills/planning.md`
 
+## Scope
+
+Explicit file path patterns this agent owns:
+
+```
+docs/exec-plans/**              # Execution plans (active and completed)
+tasks/**                        # Task tracking (todo.md, lessons.md)
+agents/skills/planning.md       # Own skill file
+SPEC.md                         # Technical specification
+DECISIONS.md                    # Architecture decision log
+```
+
+Files outside these patterns require justification in the handoff.
+
+## Handoff
+
+Every task completion produces a structured handoff per `agents/skills/shared/handoff-protocol.md`.
+
+Required fields: status, summary, acceptance checked, files changed, scope compliance, concerns, suggestions.
+
+PlanningAgent also reviews handoff concerns from other agents. A concern raised in sprint N that's still unresolved by sprint N+2 is a planning failure.
+
 ## Interaction with Other Agents
 
 - **All agents**: Receives review requests, produces execution plans

@@ -28,6 +28,22 @@ OpenClaw is a comprehensive astrodynamics AI platform combining professional-gra
 - **Chains**: Base, Solana, Ethereum
 - **Supply**: 1,000,000,000 total
 
+## 🛠️ Contributor Workflow (Optional)
+
+- **Plan rigor**: Follow non-trivial-task planning rules in `agents/skills/planning.md`.
+- **Completion safety**: For stronger session-level completion checks, you can install the Taskmaster stop-hook:
+  - `git clone https://github.com/blader/taskmaster.git`
+  - `cd taskmaster`
+  - `bash install.sh`
+
+### Taskmaster-like manual mode (no hooks)
+
+If you prefer not to install hooks, keep the same behavior with a manual completion gate:
+
+- Report each objective as `done / partial / blocked`.
+- Include the completion-gate checklist from `agents/skills/planning.md` (R-012) in your final response.
+- If any item is `partial` or `blocked`, continue execution before marking complete.
+
 ## 🛠️ Tech Stack
 
 - C++17/20 (Core library)
