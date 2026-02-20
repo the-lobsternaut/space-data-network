@@ -1,0 +1,63 @@
+name: Strategic Plan Task
+description: Track a single strategic-plan outcome in GitHub Issues + Project board.
+title: "Plan: "
+labels:
+  - type:planning
+  - priority:P1
+body:
+  - type: input
+    id: objective
+    attributes:
+      label: Objective
+      description: What outcome must be achieved?
+      placeholder: Ship a concrete outcome, not an activity.
+    validations:
+      required: true
+
+  - type: textarea
+    id: strategic_link
+    attributes:
+      label: Strategic Plan Link
+      description: Link the relevant section in STRATEGIC_PLAN.md.
+      placeholder: STRATEGIC_PLAN.md:<line> or section heading
+    validations:
+      required: true
+
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: In-scope and out-of-scope boundaries.
+      placeholder: "- In: ...\n- Out: ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: Checklist used to close this issue.
+      placeholder: "- [ ] ...\n- [ ] ..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies / Blockers
+      description: What must happen first, or what could block this?
+      placeholder: "Issue links, owners, and unblock conditions."
+    validations:
+      required: false
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Strategic Phase
+      options:
+        - phase:0-foundation
+        - phase:1-core
+        - phase:2-access
+        - phase:3-community
+    validations:
+      required: true

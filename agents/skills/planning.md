@@ -69,6 +69,17 @@ Use exactly these fields before handoff:
 - `Deferral Notes`: `<brief or 'none'>`
 - `Next Risk`: `<if BLOCK, describe one highest-priority risk>`
 
+### R-013: Strategic Plan Work Requires GitHub Issue + Project Tracking
+
+For any plan derived from `STRATEGIC_PLAN.md`:
+
+1. Create/update a GitHub issue before execution
+2. Place it on the strategic GitHub Project board
+3. Use board status as the workflow state
+4. Reflect important deltas back into `tasks/todo.md`
+
+Follow `agents/skills/github-project-tracking.md` for detailed tracking rules and command patterns.
+
 ### R-005: Lessons Are Logged Immediately
 
 Don't batch lessons. After every task completion (or failure):

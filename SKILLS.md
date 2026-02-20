@@ -10,6 +10,7 @@
 | --- | --- | --- | --- |
 | Documentation | `agents/skills/documentation.md` | ~200 | Doc gardening, drift detection, quality scoring |
 | Planning | `agents/skills/planning.md` | ~250 | Structured review, exec plans, task orchestration |
+| GitHub Project Tracking | `agents/skills/github-project-tracking.md` | ~200 | Issues, project boards, strategic-plan execution tracking |
 | Content Generation | `agents/skills/content-generation.md` | ~200 | Hooks, captions, TikTok/X/LinkedIn/YouTube |
 | Build Pipeline | `agents/skills/build-pipeline.md` | ~200 | C++, CMake, Emscripten, WASM, CI/CD |
 | Web3 Integration | `agents/skills/web3-integration.md` | ~200 | Tokens, Stripe, Coinbase, feature gating |

@@ -34,7 +34,7 @@
 | Agent | File | Skill File | Domain |
 | --- | --- | --- | --- |
 | Documentation | `agents/DocumentationAgent.md` | `agents/skills/documentation.md` | Docs, drift detection, gardening |
-| Planning | `agents/PlanningAgent.md` | `agents/skills/planning.md` | Review, exec plans, task mgmt |
+| Planning | `agents/PlanningAgent.md` | `agents/skills/planning.md` + `agents/skills/github-project-tracking.md` | Review, exec plans, task mgmt |
 | Content | `agents/ContentAgent.md` | `agents/skills/content-generation.md` | Social media, educational content |
 | Build | `agents/BuildAgent.md` | `agents/skills/build-pipeline.md` | C++ / WASM / CI/CD |
 | Web3 | `agents/Web3Agent.md` | `agents/skills/web3-integration.md` | Tokens, payments, gating |
@@ -60,6 +60,7 @@ Every agent follows this cycle after each task:
 
 - `agents/skills/shared/code-review.md` — Agent-to-agent review standards
 - `agents/skills/shared/testing.md` — Testing patterns across all domains
+- `agents/skills/github-project-tracking.md` — GitHub Issues + Kanban board tracking for strategic work
 - `agents/skills/shared/handoff-protocol.md` — Structured task result format
 - `agents/skills/memory-management.md` — Memory config, failure prevention, advanced tools
 - `agents/memory/MEMORY.md` — Cross-agent learnings

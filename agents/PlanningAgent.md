@@ -131,6 +131,18 @@ What we're doing and why.
 - Document results and outcomes
 - Capture lessons in `tasks/lessons.md`
 
+### Strategic Plan Tracking (GitHub Issues + Kanban)
+
+When work is tied to `STRATEGIC_PLAN.md`, PlanningAgent must:
+
+1. Create or update a GitHub issue for the work item
+2. Add the issue to the strategic GitHub Project board
+3. Keep board status current (`Backlog`, `Ready`, `In Progress`, `Blocked`, `In Review`, `Done`)
+4. Ensure issue acceptance criteria exist before implementation
+5. Reconcile board state with `tasks/todo.md` at session end
+
+Use `agents/skills/github-project-tracking.md` as the operating rule set.
+
 ## Decision Tree
 
 ```
@@ -146,9 +158,10 @@ New task arrives:
 └── Unclear scope → Research first via subagent, then decide
 ```
 
-## Skill File
+## Skill Files
 
-Detailed review rules, planning templates, workflow patterns: `agents/skills/planning.md`
+Detailed review/planning rules: `agents/skills/planning.md`
+GitHub tracking rules for strategic work: `agents/skills/github-project-tracking.md`
 
 ## Scope
 
@@ -158,6 +171,7 @@ Explicit file path patterns this agent owns:
 docs/exec-plans/**              # Execution plans (active and completed)
 tasks/**                        # Task tracking (todo.md, lessons.md)
 agents/skills/planning.md       # Own skill file
+agents/skills/github-project-tracking.md  # Strategic tracking skill
 SPEC.md                         # Technical specification
 DECISIONS.md                    # Architecture decision log
 ```

@@ -8,12 +8,54 @@
 
 | Tool | Purpose | Config |
 | --- | --- | --- |
-| GitHub CLI (`gh`) | PR management, issue tracking | Auth via `gh auth login` |
+| GitHub CLI (`gh`) | PRs, issues, project board management | Auth via `gh auth login` (scopes: `repo`, `project`, `read:org`) |
+| GitHub MCP Server | Agent-native GitHub access (issues/projects/PR context) | `npx -y @modelcontextprotocol/server-github` + `GITHUB_PERSONAL_ACCESS_TOKEN` |
 | CMake | C++ build system | `CMakeLists.txt` in OrbPro root |
 | Emscripten (`emcc`) | C++ to WASM compilation | Install via `emsdk` |
 | Google Test | C++ unit testing | Linked via CMake |
 | Playwright | Browser testing for WASM | `npm install playwright` |
 | Doxygen | C++ API doc generation | `Doxyfile` in OrbPro root |
+
+## GitHub Tracking Workflow Tools
+
+Use these for strategic-plan execution tracking:
+
+1. **Primary**: GitHub MCP server (agent reads/writes issues/project items directly)
+2. **Fallback**: GitHub CLI (`gh issue ...`, `gh project ...`)
+
+Required token scopes:
+
+- `repo` (issues and PRs)
+- `project` (GitHub Projects board management)
+- `read:org` (organization/project visibility)
+
+Quick validation commands:
+
+```bash
+gh --version
+gh auth status
+gh auth refresh -s repo -s project -s read:org
+gh project list --owner DigitalArsenal
+gh issue list --repo DigitalArsenal/openclaw
+```
+
+MCP server config snippet (client config file, do not commit tokens):
+
+```json
+{
+  "mcpServers": {
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    }
+  }
+}
+```
+
+Tracking conventions are defined in `agents/skills/github-project-tracking.md`.
 
 ## Content Tools
 
@@ -73,6 +115,9 @@ Create a `.env` file (NEVER commit this):
 ```bash
 # OpenAI
 OPENAI_API_KEY=sk-...
+
+# GitHub (MCP + gh CLI)
+GITHUB_PERSONAL_ACCESS_TOKEN=ghp_...
 
 # Postiz (TikTok)
 POSTIZ_API_KEY=...

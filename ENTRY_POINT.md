@@ -64,7 +64,7 @@ Read these files in this exact sequence. Each builds on the previous:
 Read: SOUL → IDENTITY → USER → AGENTS → SPEC → `agents/DocumentationAgent.md` → `agents/skills/documentation.md` → MEMORY → `docs/QUALITY_SCORE.md` → `tasks/todo.md`
 
 ### PlanningAgent
-Read: SOUL → IDENTITY → USER → AGENTS → SPEC → `agents/PlanningAgent.md` → `agents/skills/planning.md` → DECISIONS → `tasks/todo.md` → `tasks/lessons.md`
+Read: SOUL → IDENTITY → USER → AGENTS → SPEC → `agents/PlanningAgent.md` → `agents/skills/planning.md` → `agents/skills/github-project-tracking.md` → DECISIONS → `tasks/todo.md` → `tasks/lessons.md`
 
 ### ContentAgent
 Read: SOUL → IDENTITY → USER → AGENTS → `agents/ContentAgent.md` → `agents/skills/content-generation.md` → MEMORY → `tasks/todo.md`
