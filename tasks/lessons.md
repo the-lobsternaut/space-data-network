@@ -24,4 +24,9 @@ files changed, scope compliance, concerns, suggestions, metrics).
 
 ## Entries
 
-_No entries yet. Agents begin logging here as they execute tasks._
+### [2026-02-20] GitHub tracking baseline for strategic planning (PlanningAgent)
+
+**Outcome**: Success
+**What happened**: Added a dedicated GitHub-project-tracking skill, wired PlanningAgent to require issue + project board tracking for `STRATEGIC_PLAN.md` work, and added strategic issue templates.
+**Rule added**: `agents/skills/github-project-tracking.md` + planning rule `R-013` in `agents/skills/planning.md`
+**Lesson**: Strategic work moves faster when issue structure and board status rules are codified in agent skills, not left as informal process.
