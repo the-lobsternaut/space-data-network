@@ -55,6 +55,7 @@ OpenClaw now extends into **on-orbit capability commoditization** through signed
 4. **Revenue Generation**: Reach $50K/month in combined token utility and subscription revenue
 5. **Educational Impact**: Create 100+ tutorials and demos making orbital mechanics accessible to students worldwide
 6. **Capability Markets**: Launch a production marketplace for on-orbit capability NFTs (ex: discrete imaging windows, revisit rights, bandwidth time buckets)
+7. **Open Infrastructure**: Make high-precision orbit propagation and baseline conjunction assessment permanently free and open-source as the core network utility
 
 ---
 
@@ -184,7 +185,7 @@ OpenClaw tiered access matrix is tracked in `docs/product-specs/tiered-access.md
 
 Operational defaults remain:
 
-- FREE: 100 calls/month, basic conjunction screening
+- FREE: 100 calls/month, **high-precision orbit propagation + baseline conjunction assessment**
 - BRONZE: 5,000 calls/month, full CDM analysis
 - SILVER: 50,000 calls/month, Monte Carlo
 - GOLD: unlimited calls + maneuver planning

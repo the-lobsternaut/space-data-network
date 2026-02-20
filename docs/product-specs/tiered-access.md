@@ -2,11 +2,13 @@
 
 **Status**: Active
 **Owner**: Web3Agent
-**Last Updated**: 2026-02-18
+**Last Updated**: 2026-02-20
 
 ## Overview
 
-OpenClaw uses a hybrid access model where features unlock based on $CLAW token holdings OR active subscriptions — whichever threshold is met.
+OpenClaw uses a hybrid access model where features unlock based on $CLAW token holdings OR active subscriptions—whichever threshold is met.
+
+The network foundation is free and open-source: **high-precision orbit propagation** and **baseline conjunction assessment** are available to everyone on the Free tier.
 
 ## Access Tiers
 
@@ -15,7 +17,8 @@ OpenClaw uses a hybrid access model where features unlock based on $CLAW token h
 | Token Hold | 0 | 10K $CLAW | 50K $CLAW | 200K $CLAW |
 | OR Subscription | -- | $9.99/mo | $29.99/mo | $99.99/mo |
 | API Calls/Month | 100 | 5,000 | 50,000 | Unlimited |
-| Conjunction Analysis | Basic | Full CDM | Monte Carlo | Maneuver Plan |
+| Orbit Propagation | High-precision | Optimized Batch | Optimized Batch | Full Trajectory Suite |
+| Conjunction Analysis | High-precision baseline screening + geometry | Full CDM | Monte Carlo | Maneuver Plan |
 | Mission Planning | No | No | Ground Track | Full Suite |
 | Discord Access | Public | Holder | Priority | 1-on-1 |
 | Early Features | No | No | 7 days | 30 days |

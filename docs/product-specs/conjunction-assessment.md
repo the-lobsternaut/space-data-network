@@ -8,6 +8,8 @@
 
 Conjunction assessment is OpenClaw's flagship feature — analyzing the risk of two objects colliding in orbit. This is critical for the growing space debris problem affecting satellite operators globally.
 
+The baseline screening workflow is free and open-source as OpenClaw's shared space-safety utility.
+
 ## User Stories
 
 1. **Satellite Operator**: "I need to know if my satellite is at risk of collision in the next 7 days and what maneuver to perform to avoid it."
@@ -18,11 +20,11 @@ Conjunction assessment is OpenClaw's flagship feature — analyzing the risk of 
 
 | Capability | Free | Bronze | Silver | Gold |
 | --- | --- | --- | --- | --- |
-| Basic screening (miss distance) | Yes | Yes | Yes | Yes |
+| Basic screening (miss distance + geometry) | Yes | Yes | Yes | Yes |
 | Full CDM parsing and analysis | No | Yes | Yes | Yes |
 | Monte Carlo risk assessment | No | No | Yes | Yes |
 | Collision avoidance maneuver planning | No | No | No | Yes |
-| Conjunction geometry visualization | No | Yes | Yes | Yes |
+| Conjunction geometry visualization | Yes | Yes | Yes | Yes |
 | Historical conjunction database | No | No | Yes | Yes |
 | Real-time alerts | No | No | No | Yes |
 
