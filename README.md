@@ -14,6 +14,7 @@ OpenClaw is a comprehensive astrodynamics AI platform combining professional-gra
 ## 📚 Documentation
 
 - [Strategic Plan](./STRATEGIC_PLAN.md) - Complete implementation strategy
+- [Creative Prompt Pack](./docs/creative-prompt-pack.md) - Apple-level design system and marketing prompt templates
 
 ## 🔗 Links
 
