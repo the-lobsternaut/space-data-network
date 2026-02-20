@@ -29,7 +29,7 @@ Skills are **actionable rule sets**, not documentation. They contain:
 
 ## How Skills Grow
 
-```
+```text
 Agent encounters new situation
 ├── Success → Log to tasks/lessons.md → Add pattern (P-NNN) to skill file
 ├── Failure → Log to tasks/lessons.md → Add rule (R-NNN) to skill file

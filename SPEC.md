@@ -65,6 +65,7 @@ These are specific, verifiable conditions — not vague goals:
 ## Dependency Philosophy
 
 **Allowed** (stable, well-documented, good LLM training coverage):
+
 - Eigen, Boost (minimal), IAU SOFA, nlohmann/json, Google Test
 - OpenZeppelin (smart contracts)
 - Stripe SDK, Coinbase Commerce SDK
