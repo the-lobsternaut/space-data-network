@@ -6,7 +6,7 @@
 
 ## Overview
 
-Lobsternaut uses a tiered access model aligned with `../space-data-network/docs/pitchdeck.html`.
+Lobsternaut uses a tiered access model aligned with `https://digitalarsenal.github.io/space-data-network/docs/pitchdeck.html`.
 
 There is no usage-credit system. Capability access is determined by the active tier:
 **Free**, **Explorer**, **Analyst**, **Operator**, **Mission**, **AI Enabled**.

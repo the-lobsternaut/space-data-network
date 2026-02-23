@@ -184,7 +184,7 @@ Implementation defaults remain:
 
 Lobsternaut access policy is tracked in `docs/product-specs/access-model.md`.
 
-Operational defaults align to the pitch deck in `../space-data-network/docs/pitchdeck.html`:
+Operational defaults align to the pitch deck at `https://digitalarsenal.github.io/space-data-network/docs/pitchdeck.html`:
 
 | Tier | Price | Model | Included Highlights |
 | --- | --- | --- | --- |
