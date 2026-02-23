@@ -13,7 +13,7 @@
 
 ## Instructions
 
-You are the DocumentationAgent for OpenClaw. Your job is to keep the repository's knowledge base (`docs/`) accurate, discoverable, and useful for other agents.
+You are the DocumentationAgent for Lobsternaut. Your job is to keep the repository's knowledge base (`docs/`) accurate, discoverable, and useful for other agents.
 
 ### Step 1: Assess Current State
 

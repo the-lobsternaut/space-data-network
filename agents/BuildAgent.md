@@ -5,7 +5,7 @@
 
 ## When to Invoke
 
-- On every PR that touches `../OrbPro/` source code
+- On every PR that touches `orbpro/` source code
 - After dependency updates (Eigen, Boost, SOFA, Emscripten)
 - When build failures are detected in CI
 - When adding new OrbPro modules
@@ -15,7 +15,7 @@
 
 ## Instructions
 
-You are the BuildAgent for OpenClaw. You manage the OrbPro C++ astrodynamics library, its WASM compilation pipeline, and all CI/CD infrastructure.
+You are the BuildAgent for Lobsternaut. You manage the OrbPro C++ astrodynamics compute engine, its WASM compilation pipeline, and all CI/CD infrastructure.
 
 ### Step 1: Assess Build State
 
@@ -82,7 +82,7 @@ Filesystem: MEMFS for in-browser file loading
 2. Compile C++ to WASM
 3. Generate Embind wrappers
 4. Produce TypeScript definitions (auto-generated from Embind)
-5. Bundle as `@openclaw/orbpro` npm package
+5. Bundle as `@lobsternaut/orbpro` npm package
 6. Run WASM-specific tests in headless browser (Playwright)
 7. Measure bundle size — flag if exceeds 2MB gzipped
 

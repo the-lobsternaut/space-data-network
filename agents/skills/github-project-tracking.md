@@ -124,7 +124,7 @@ gh auth refresh -s repo -s project -s read:org
 
 ```bash
 gh issue create \
-  --repo DigitalArsenal/openclaw \
+  --repo DigitalArsenal/lobsternaut \
   --title "Plan: <work item>" \
   --label "type:planning,priority:P1,phase:0-foundation" \
   --body-file /tmp/issue.md
@@ -133,7 +133,7 @@ gh issue create \
 ### Create or View Project Board
 
 ```bash
-gh project create --owner DigitalArsenal --title "OpenClaw Strategic Plan"
+gh project create --owner DigitalArsenal --title "Lobsternaut Strategic Plan"
 gh project list --owner DigitalArsenal
 gh project view <number> --owner DigitalArsenal --web
 ```
@@ -143,7 +143,7 @@ gh project view <number> --owner DigitalArsenal --web
 ```bash
 gh project item-add <project-number> \
   --owner DigitalArsenal \
-  --url https://github.com/DigitalArsenal/openclaw/issues/<issue-number>
+  --url https://github.com/DigitalArsenal/lobsternaut/issues/<issue-number>
 ```
 
 ## Definition of Done — GitHub Tracking

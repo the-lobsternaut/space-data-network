@@ -1,5 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: OpenClaw Strategic Plan
-    url: https://github.com/DigitalArsenal/openclaw/blob/main/STRATEGIC_PLAN.md
+  - name: Lobsternaut Strategic Plan
+    url: https://github.com/DigitalArsenal/lobsternaut/blob/main/STRATEGIC_PLAN.md
     about: Confirm scope and phase in the strategic plan before opening an issue.

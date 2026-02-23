@@ -1,4 +1,4 @@
-# Design Doc: OrbPro C++ Library Architecture
+# Design Doc: OrbPro C++ Engine Architecture
 
 **Status**: Active
 **Owner**: BuildAgent
@@ -6,7 +6,7 @@
 
 ## Overview
 
-OrbPro is the core computational engine — a modular C++ astrodynamics library in the `../OrbPro` directory. It compiles natively for server use and to WebAssembly for browser-native performance.
+OrbPro is the core computational engine — a modular C++ astrodynamics codebase in the `orbpro/` workspace. It compiles natively for server use and to WebAssembly for browser-native performance. Lobsternaut does not maintain OrbPro as a separate standalone library project.
 
 ## Module Map
 
@@ -90,6 +90,6 @@ No reverse dependencies. Coordinates is the leaf module with zero internal depen
 
 | Date | Decision | Rationale |
 | --- | --- | --- |
-| 2026-02-14 | Modular library with separate namespaces | Enables independent WASM module loading, reduces bundle size |
+| 2026-02-14 | Modular engine with separate namespaces | Enables independent WASM module loading, reduces bundle size |
 | 2026-02-14 | Eigen for linear algebra | Industry standard, header-only, excellent WASM support |
 | 2026-02-14 | Coordinates as leaf module | Every other module needs coordinates; it must have zero internal deps |

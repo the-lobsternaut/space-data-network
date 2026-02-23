@@ -1,6 +1,6 @@
 # Core Beliefs — Agent-First Operating Principles
 
-> These are the golden principles for the OpenClaw agent system.
+> These are the golden principles for the Lobsternaut agent system.
 > Every agent, linter, and review process should enforce these.
 > Derived from OpenAI Harness Engineering + Larry Pattern + team experience.
 

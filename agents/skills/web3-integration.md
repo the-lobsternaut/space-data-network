@@ -73,17 +73,17 @@ Never skip testnet. Never "just deploy to mainnet real quick."
 - Use idempotency keys for all API calls
 - Handle duplicate webhook deliveries gracefully (idempotent handlers)
 
-**Subscription lifecycle**:
+**Entitlement lifecycle**:
 ```
-checkout.session.completed → Create subscription record
-invoice.paid → Renew/confirm subscription
+checkout.session.completed → Create purchase/entitlement record
+invoice.paid → Renew/confirm recurring entitlement
 invoice.payment_failed → Enter 3-day grace period
-customer.subscription.deleted → Deactivate access
-customer.subscription.updated → Update tier
+customer.subscription.deleted → Deactivate recurring entitlement
+customer.subscription.updated → Update recurring entitlement policy
 ```
 
 **Database schema**:
-- Store wallet_address + subscription_tier + stripe_customer_id + status
+- Store wallet_address + credit_balance + offering_entitlements + stripe_customer_id + status
 - Index on wallet_address (primary lookup path)
 - Index on stripe_customer_id (webhook lookup path)
 - Never store full credit card details (Stripe handles PCI compliance)
@@ -92,40 +92,46 @@ customer.subscription.updated → Update tier
 
 - Create charges via Coinbase Commerce API
 - Support: BTC, ETH, USDC, USDT, SOL, MATIC
-- Webhook: `charge:confirmed` triggers subscription activation
+- Webhook: `charge:confirmed` triggers purchase entitlement activation
 - Handle `charge:failed` and `charge:pending` states
-- Same pricing as Stripe tiers (USD equivalent)
+- Same pricing model as Stripe offerings/credit bundles (USD equivalent)
 - Charges expire after 60 minutes — handle `charge:expired`
 
 ### R-008: Access Control Logic
 
-The hybrid gating function checks token balance first, then subscription:
+The entitlement function checks baseline-free operations first, then purchased entitlements and credit/policy eligibility:
 
 ```javascript
-async function getAccessTier(walletAddress) {
-  const [tokenBalance, subscription] = await Promise.all([
-    getTokenBalance(walletAddress),
-    getSubscription(walletAddress)
+async function getEntitlement(walletAddress, operation) {
+  const [policy, credits, entitlements] = await Promise.all([
+    getAccountPolicy(walletAddress),
+    getCreditBalance(walletAddress),
+    getPurchasedEntitlements(walletAddress)
   ]);
 
-  // Token balance takes priority (one-time purchase, permanent)
-  if (tokenBalance >= 200_000) return 'gold';
-  if (tokenBalance >= 50_000) return 'silver';
-  if (tokenBalance >= 10_000) return 'bronze';
+  if (operation.class === 'baseline-free') {
+    return { allowed: true };
+  }
 
-  // Subscription fallback (monthly payment)
-  if (subscription?.status === 'active') return subscription.tier;
+  if (operation.class === 'purchased-offering' && entitlements.includes(operation.offeringId)) {
+    return { allowed: true };
+  }
 
-  return 'free';
+  if (credits.remaining > 0 || policy.includes(operation.requiredFlag)) {
+    return { allowed: true };
+  }
+
+  return { allowed: false };
 }
 ```
 
 Rules:
-- Token balance is checked on-chain (not cached) for tier determination
-- Cache the result for 5 minutes to avoid excessive RPC calls
-- Subscription status is checked in the database
-- If both exist, the HIGHER tier wins
-- Rate limit: even Gold tier gets 1000 req/sec max (prevent abuse)
+- Baseline-free operations must remain accessible without credits
+- Purchased-offering operations must validate receipt/ownership before execution
+- Credit-metered operations must verify available balance before execution
+- Policy flags may satisfy operation requirements without immediate credit debit
+- Token utility can redeem credits and apply fee discounts without creating feature lockouts
+- Rate limit: even highest policy class gets hard caps (prevent abuse)
 
 ### R-009: Smart Contract Security Checklist
 
@@ -198,12 +204,12 @@ For payment integration:
 - [ ] Idempotent handlers for duplicate webhook deliveries
 - [ ] Database schema matches R-006 specification
 
-For feature gating:
+For access control:
 
 - [ ] Access control logic matches R-008 specification
-- [ ] All tiers tested: Free, Bronze, Silver, Gold
-- [ ] Token balance check uses latest block (not cached for tier determination)
-- [ ] Rate limiting enforced even for highest tier
+- [ ] All paths tested: baseline-free, metered credits, purchased offering, policy overrides
+- [ ] Credit checks are accurate and atomic for debited operations
+- [ ] Rate limiting enforced even for highest policy class
 - [ ] Wallet addresses validated before processing (R-010)
 
 For all Web3 tasks:

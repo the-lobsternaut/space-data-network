@@ -1,6 +1,6 @@
 # Content Generation Skill — Rules and Patterns
 
-> Self-improving content rules for OpenClaw's astrodynamics marketing.
+> Self-improving content rules for Lobsternaut's astrodynamics marketing.
 > Inspired by Larry pattern: every flop becomes a rule, every hit becomes a formula.
 > ~200 lines initial seed, expected to grow to 500+ through performance tracking.
 
@@ -33,7 +33,7 @@ Content about "I" or "we" underperforms. Content about other people's reactions 
 
 Captions tell stories. They never list features. They never say "Download now!" They naturally mention the product as part of the narrative.
 
-- BAD: "OpenClaw features: conjunction analysis, orbit propagation, collision avoidance. Try it free!"
+- BAD: "Lobsternaut features: conjunction analysis, orbit propagation, collision avoidance. Try it free!"
 - GOOD: "I was curious if an old rocket body would hit a Starlink satellite next week. So I ran the numbers. The probability came back at 1 in 4,300. Here's what that means and why satellite operators are losing sleep over it."
 
 ### R-004: Platform-Specific Formatting
@@ -42,7 +42,7 @@ Captions tell stories. They never list features. They never say "Download now!" 
 - Max 280 chars for single posts, threads for depth
 - Lead with the hook — if they don't read the first line, they don't read anything
 - Use line breaks for readability (no walls of text)
-- 1-3 hashtags max (#SpaceDebris #Astrodynamics #OpenClaw)
+- 1-3 hashtags max (#SpaceDebris #Astrodynamics #Lobsternaut)
 - Images/visualizations get 2-3x engagement over text-only
 - Best times: 8-10 AM EST, 12-2 PM EST, 7-9 PM EST
 
@@ -99,9 +99,9 @@ Pre-validated facts for content (all verified against NASA/ESA sources):
 Never hard-sell. Always soft-mention. Rotate CTAs based on what's converting:
 
 **CTA Templates**:
-- "Built this with OpenClaw's conjunction analyzer. It's free and open source."
+- "Built this with Lobsternaut's conjunction analyzer. Baseline use is free."
 - "If you want to try this yourself, the code is on GitHub."
-- "More on how this works in our docs at openclaw.ai"
+- "More on how this works in our docs at lobsternaut.ai"
 - "Join our Discord if you want to geek out about orbital mechanics"
 - "$CLAW holders get unlimited API access — just saying"
 

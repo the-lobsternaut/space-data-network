@@ -30,3 +30,24 @@ files changed, scope compliance, concerns, suggestions, metrics).
 **What happened**: Added a dedicated GitHub-project-tracking skill, wired PlanningAgent to require issue + project board tracking for `STRATEGIC_PLAN.md` work, and added strategic issue templates.
 **Rule added**: `agents/skills/github-project-tracking.md` + planning rule `R-013` in `agents/skills/planning.md`
 **Lesson**: Strategic work moves faster when issue structure and board status rules are codified in agent skills, not left as informal process.
+
+### [2026-02-21] Replaced tiered access with unified access model (PlanningAgent)
+
+**Outcome**: Success
+**What happened**: Removed Free/Bronze/Silver/Gold feature-tier language from the strategic plan and aligned core product specs/agent docs to a baseline-free + metered credits model.
+**Rule added**: pending promotion
+**Lesson**: Access-model changes should be applied to both strategy docs and canonical product specs in the same pass to avoid drift.
+
+### [2026-02-21] Shifted monetization to first-party network commerce (PlanningAgent)
+
+**Outcome**: Success
+**What happened**: Updated strategy and Web3 guidance so Lobsternaut monetizes by running its own data products, service endpoints, and NFT storefront on the network under the same operator rules as anyone else.
+**Rule added**: pending promotion
+**Lesson**: Pricing-model decisions should be encoded as operator behavior rules, not only as marketing language, so implementation stays aligned.
+
+### [2026-02-23] Reframed OrbPro plan around upstream source links (PlanningAgent)
+
+**Outcome**: Success
+**What happened**: Removed commitments to a separately maintained open-source OrbPro library, updated strategy/spec/access docs to baseline-free terminology, and added `docs/references/orbpro-upstream-sources.md` as the canonical upstream-source link registry.
+**Rule added**: pending promotion
+**Lesson**: When product direction changes, update strategy, spec, access model, and agent skill language together to prevent policy drift.

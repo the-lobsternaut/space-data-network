@@ -1,8 +1,8 @@
-# OpenClaw Architecture
+# Lobsternaut Architecture
 
 ## Domain Map
 
-OpenClaw is organized into 8 domains. Each domain has clear boundaries and dependency rules.
+Lobsternaut is organized into 8 domains. Each domain has clear boundaries and dependency rules.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -16,9 +16,9 @@ OpenClaw is organized into 8 domains. Each domain has clear boundaries and depen
 │   Tiered gating  │   Stripe, CB     │  $CLAW multi-chain    │
 ├──────────────────┴──────────────────┴───────────────────────┤
 │                     WASM BRIDGE                              │
-│  Emscripten build, JS/TS bindings, @openclaw/orbpro npm     │
+│  Emscripten build, JS/TS bindings, @lobsternaut/orbpro npm     │
 ├─────────────────────────────────────────────────────────────┤
-│                     ORBPRO CORE (C++)                        │
+│                    ORBPRO ENGINE (C++)                       │
 │  Propagation, Coordinates, Optimization, Conjunction,        │
 │  Mission Analysis                                            │
 ├─────────────────────────────────────────────────────────────┤
@@ -36,8 +36,8 @@ Dependencies flow **downward only**. No domain may depend on a domain above it.
 - Access Control → Token Layer, Payment Layer
 - Payment Layer → (external: Stripe, Coinbase Commerce)
 - Token Layer → (external: Base, Solana, Ethereum RPCs)
-- WASM Bridge → OrbPro Core
-- OrbPro Core → (external: SOFA, Eigen, Boost)
+- WASM Bridge → OrbPro Engine
+- OrbPro Engine → (external: SOFA, Eigen, Boost)
 - Community → Token Layer, Access Control
 
 ## Layering Within Each Domain
@@ -57,15 +57,15 @@ Types → Config → Repo → Service → Runtime → UI
 
 Cross-cutting concerns (auth, telemetry, logging) enter through a **Providers** interface at the Service layer.
 
-## OrbPro Core Modules
+## OrbPro Engine Modules
 
 | Module | Location | Purpose |
 | --- | --- | --- |
-| Propagation | `../OrbPro/src/propagation/` | SGP4/SDP4, numerical integrators, perturbation models |
-| Coordinates | `../OrbPro/src/coordinates/` | Frame transforms, time systems, geodetic conversions |
-| Optimization | `../OrbPro/src/optimization/` | Lambert, Hohmann, low-thrust trajectories |
-| Conjunction | `../OrbPro/src/conjunction/` | CDM parsing, collision probability, maneuver planning |
-| Mission Analysis | `../OrbPro/src/mission/` | Ground tracks, access windows, eclipse prediction |
+| Propagation | `orbpro/src/propagation/` | SGP4/SDP4, numerical integrators, perturbation models |
+| Coordinates | `orbpro/src/coordinates/` | Frame transforms, time systems, geodetic conversions |
+| Optimization | `orbpro/src/optimization/` | Lambert, Hohmann, low-thrust trajectories |
+| Conjunction | `orbpro/src/conjunction/` | CDM parsing, collision probability, maneuver planning |
+| Mission Analysis | `orbpro/src/mission/` | Ground tracks, access windows, eclipse prediction |
 
 ## Technology Choices
 
@@ -88,19 +88,13 @@ Following "prefer boring technology" principle:
 ## File Organization
 
 ```
-lobsternaut/                    # This repo — agent harness + docs
+lobsternaut/                    # This repo — agent harness + docs + OrbPro engine source
 ├── AGENTS.md                   # Agent system map (inject into context)
 ├── ARCHITECTURE.md             # This file
 ├── STRATEGIC_PLAN.md           # Business strategy
+├── orbpro/                     # OrbPro codebase (not a separate standalone library repo)
 ├── agents/                     # Agent definitions and skills
 ├── docs/                       # Knowledge base (system of record)
 ├── tasks/                      # Plans and lessons
 └── x-links/                    # Reference materials
-
-../OrbPro/                      # Separate repo — C++ astrodynamics library
-├── src/                        # C++ source organized by module
-├── include/                    # Public headers
-├── test/                       # Google Test suites
-├── wasm/                       # Emscripten build configs + JS wrapper
-└── docs/                       # Doxygen + Sphinx
 ```

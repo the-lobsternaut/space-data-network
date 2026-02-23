@@ -2,27 +2,29 @@
 
 **Status**: Active
 **Owner**: Web3Agent
-**Last Updated**: 2026-02-18
+**Last Updated**: 2026-02-23
 
 ## Overview
 
-OpenClaw offers three payment paths to maximize accessibility:
-1. **Token holdings** — buy and hold $CLAW (permanent access while holding)
-2. **Credit card** — Stripe subscription (monthly, no crypto knowledge needed)
-3. **Crypto payment** — Coinbase Commerce (pay with BTC/ETH/USDC, no $CLAW needed)
+Lobsternaut uses a tier-based subscription model for product access:
+1. **Stripe (card)** — recurring per-seat subscriptions
+2. **Coinbase Commerce (crypto)** — crypto checkout for tier subscriptions
+3. **Token utility ($CLAW)** — discounts/marketplace utility (does not replace tier subscription)
+
+There is no usage-credit metering in the product access model.
 
 ## Architecture
 
-```
+```text
 User connects wallet (MetaMask/Phantom)
          │
-         ├── Has enough $CLAW tokens? → Grant tier based on balance
+         ├── Select tier (Free / Explorer / Analyst / Operator / Mission / AI Enabled)
          │
-         ├── Wants to pay with card? → Stripe Checkout
-         │   └── Webhook → Database → Grant tier
+         ├── Pay by card?   → Stripe Checkout
+         │                   └── Webhook → DB subscription record → Grant tier
          │
-         └── Wants to pay with crypto? → Coinbase Commerce
-             └── Webhook → Database → Grant tier
+         └── Pay by crypto? → Coinbase Commerce
+                             └── Webhook → DB subscription record → Grant tier
 ```
 
 ## Backend Stack
@@ -36,27 +38,28 @@ User connects wallet (MetaMask/Phantom)
 
 ```sql
 CREATE TABLE users (
-  id            SERIAL PRIMARY KEY,
-  wallet_address VARCHAR(64) UNIQUE NOT NULL,
-  created_at    TIMESTAMP DEFAULT NOW()
+  id              SERIAL PRIMARY KEY,
+  wallet_address  VARCHAR(64) UNIQUE NOT NULL,
+  created_at      TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE subscriptions (
-  id                SERIAL PRIMARY KEY,
-  user_id           INTEGER REFERENCES users(id),
-  tier              VARCHAR(10) NOT NULL,  -- 'bronze', 'silver', 'gold'
-  status            VARCHAR(20) NOT NULL,  -- 'active', 'past_due', 'cancelled'
-  payment_method    VARCHAR(20) NOT NULL,  -- 'stripe', 'coinbase'
-  stripe_customer_id VARCHAR(64),
-  stripe_sub_id     VARCHAR(64),
-  coinbase_charge_id VARCHAR(64),
-  current_period_start TIMESTAMP,
-  current_period_end   TIMESTAMP,
-  created_at        TIMESTAMP DEFAULT NOW(),
-  updated_at        TIMESTAMP DEFAULT NOW()
+  id                    SERIAL PRIMARY KEY,
+  user_id               INTEGER REFERENCES users(id),
+  tier                  VARCHAR(12) NOT NULL,  -- 'free','explorer','analyst','operator','mission','ai_enabled'
+  status                VARCHAR(20) NOT NULL,  -- 'active','past_due','cancelled','pending'
+  payment_method        VARCHAR(20) NOT NULL,  -- 'stripe','coinbase'
+  seat_count            INTEGER NOT NULL DEFAULT 1,
+  stripe_customer_id    VARCHAR(64),
+  stripe_sub_id         VARCHAR(64),
+  coinbase_charge_id    VARCHAR(64),
+  current_period_start  TIMESTAMP,
+  current_period_end    TIMESTAMP,
+  created_at            TIMESTAMP DEFAULT NOW(),
+  updated_at            TIMESTAMP DEFAULT NOW()
 );
 
-CREATE INDEX idx_subscriptions_wallet ON subscriptions(user_id);
+CREATE INDEX idx_subscriptions_user ON subscriptions(user_id);
 CREATE INDEX idx_subscriptions_stripe ON subscriptions(stripe_customer_id);
 ```
 
@@ -64,35 +67,35 @@ CREATE INDEX idx_subscriptions_stripe ON subscriptions(stripe_customer_id);
 
 ### Checkout Flow
 
-1. User clicks "Subscribe with Card"
+1. User selects a tier and clicks "Subscribe with Card"
 2. Backend creates Stripe Checkout Session with:
-   - Price ID for the selected tier
+   - Price ID for selected tier
    - `client_reference_id` = wallet address
    - Success/cancel URLs
-3. User completes payment on Stripe's hosted page
+3. User completes payment in hosted Stripe checkout
 4. Stripe sends `checkout.session.completed` webhook
-5. Backend creates subscription record in database
-6. User's access tier updates immediately
+5. Backend creates/updates subscription record
+6. User tier updates immediately
 
 ### Webhook Handling
 
 ```javascript
-app.post('/webhooks/stripe', express.raw({type: 'application/json'}), (req, res) => {
+app.post('/webhooks/stripe', express.raw({ type: 'application/json' }), (req, res) => {
   const sig = req.headers['stripe-signature'];
   const event = stripe.webhooks.constructEvent(req.body, sig, WEBHOOK_SECRET);
 
   switch (event.type) {
     case 'checkout.session.completed':
-      // Create subscription
+      // Activate selected tier
       break;
     case 'invoice.paid':
-      // Renew subscription
+      // Renew selected tier
       break;
     case 'invoice.payment_failed':
       // Enter grace period (3 days)
       break;
     case 'customer.subscription.deleted':
-      // Deactivate subscription
+      // Revert to Free tier
       break;
   }
 
@@ -100,34 +103,41 @@ app.post('/webhooks/stripe', express.raw({type: 'application/json'}), (req, res)
 });
 ```
 
-### Pricing Configuration
+### Tier Pricing (Pitch Deck)
 
 | Tier | Stripe Price | Billing |
 | --- | --- | --- |
-| Bronze | $9.99/month | Monthly recurring |
-| Silver | $29.99/month | Monthly recurring |
-| Gold | $99.99/month | Monthly recurring |
+| Free | $0 | Forever |
+| Explorer | $10/month | Per seat, recurring |
+| Analyst | $20/month | Per seat, recurring |
+| Operator | $30/month | Per seat, recurring |
+| Mission | $40/month | Per seat, recurring |
+| AI Enabled | $70 baseline (usage-based) | Usage-billed (baseline set by formula) |
+
+Commercial defaults:
+- Annual billing: pay for 10 months, receive 12
+- Volume discounts for 5+ seats
+- AI Enabled baseline is priced at 1.75x highest fixed tier ($40 Mission -> $70 baseline), then billed by usage
 
 ## Coinbase Commerce Integration
 
 ### Payment Flow
 
-1. User clicks "Pay with Crypto"
-2. Backend creates Coinbase Commerce Charge:
+1. User selects tier and clicks "Pay with Crypto"
+2. Backend creates Coinbase Commerce charge:
    - Amount in USD
-   - Description: "OpenClaw [Tier] Subscription"
-   - `metadata.wallet_address` = user's wallet
-3. Coinbase Commerce modal shows payment options (BTC, ETH, USDC, etc.)
-4. User sends crypto from any wallet
-5. `charge:confirmed` webhook fires
-6. Backend creates subscription record
+   - Description: "Lobsternaut [Tier] Subscription"
+   - `metadata.wallet_address` = user wallet
+3. Coinbase checkout handles wallet payment
+4. `charge:confirmed` webhook fires
+5. Backend activates/renews selected tier
 
 ### Webhook Events
 
-- `charge:created` — Payment initiated (no action needed)
-- `charge:confirmed` — Payment confirmed on blockchain → activate subscription
-- `charge:failed` — Payment failed → notify user
-- `charge:expired` — 60-minute timeout → clean up pending record
+- `charge:created` — initiated
+- `charge:confirmed` — activate/renew tier
+- `charge:failed` — notify user, keep prior tier state
+- `charge:expired` — timeout, clear pending state
 
 ## Security
 
@@ -135,7 +145,7 @@ app.post('/webhooks/stripe', express.raw({type: 'application/json'}), (req, res)
 - Coinbase Commerce webhook signatures verified
 - All payment endpoints rate-limited (10 req/min per wallet)
 - Idempotent webhook handlers (duplicate deliveries handled gracefully)
-- No credit card data stored (Stripe handles PCI)
+- No card data stored (Stripe handles PCI)
 - Database encrypted at rest
 
 ## Decision Log
@@ -145,4 +155,4 @@ app.post('/webhooks/stripe', express.raw({type: 'application/json'}), (req, res)
 | 2026-02-14 | Stripe + Coinbase Commerce dual path | Maximizes accessibility for crypto and non-crypto users |
 | 2026-02-14 | SIWE for auth | Wallet-based identity, no passwords to manage |
 | 2026-02-14 | PostgreSQL | Boring, reliable, excellent tooling for agents |
-| 2026-02-14 | Token balance takes priority over subscription | Incentivizes token holding (one-time vs recurring) |
+| 2026-02-23 | Tier-based subscriptions (no usage credits) | Aligns product monetization with pitch-deck pricing model |

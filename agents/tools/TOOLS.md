@@ -36,7 +36,7 @@ gh --version
 gh auth status
 gh auth refresh -s repo -s project -s read:org
 gh project list --owner DigitalArsenal
-gh issue list --repo DigitalArsenal/openclaw
+gh issue list --repo DigitalArsenal/lobsternaut
 ```
 
 MCP server config snippet (client config file, do not commit tokens):
@@ -141,7 +141,7 @@ SOLANA_RPC_URL=https://mainnet.helius-rpc.com/?api-key=...
 DISCORD_BOT_TOKEN=...
 
 # Database
-DATABASE_URL=postgresql://user:pass@host:5432/openclaw
+DATABASE_URL=postgresql://user:pass@host:5432/lobsternaut
 
 # RevenueCat (optional)
 REVENUECAT_API_KEY=...

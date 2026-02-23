@@ -1,27 +1,29 @@
-# OpenClaw
+# Lobsternaut
 
 > **Astrodynamics AI Agent with Multi-Chain Token Economy**
 
-OpenClaw is a comprehensive astrodynamics AI platform combining professional-grade C++ orbital mechanics software (OrbPro) with Web3 tokenomics and mainstream payment accessibility.
+Lobsternaut is a comprehensive astrodynamics AI platform combining professional-grade C++ orbital mechanics software (OrbPro) with Web3 tokenomics and mainstream payment accessibility.
 
 ## 🚀 Key Features
 
-- **OrbPro C++ Library**: Production-grade astrodynamics compiled to WebAssembly
+- **OrbPro C++ Compute Engine**: Production-grade astrodynamics compiled to WebAssembly
 - **Multi-Chain Tokens**: Deployed on Base, Solana, Ethereum
-- **Hybrid Access**: Token-gated OR subscription-based (Stripe/Coinbase Commerce)
+- **Tiered Access**: Six tiers (five per-seat + AI Enabled usage-based)
 - **Flagship Feature**: Conjunction assessment and collision avoidance
+- **Source Transparency**: Published links to upstream open-source astrodynamics code used to build OrbPro
 
 ## 📚 Documentation
 
 - [Strategic Plan](./STRATEGIC_PLAN.md) - Complete implementation strategy
+- [OrbPro Upstream Sources](./docs/references/orbpro-upstream-sources.md) - Linked upstream open-source code used in OrbPro
 - [Creative Prompt Pack](./docs/creative-prompt-pack.md) - Apple-level design system and marketing prompt templates
 
 ## 🔗 Links
 
 - **Website**: Coming soon
-- **Twitter/X**: [@OpenClawAI](https://twitter.com/OpenClawAI)
+- **Twitter/X**: [@LobsternautAI](https://twitter.com/LobsternautAI)
 - **Discord**: Coming soon
-- **GitHub**: [github.com/DigitalArsenal/openclaw](https://github.com/DigitalArsenal/openclaw)
+- **GitHub**: [github.com/DigitalArsenal/lobsternaut](https://github.com/DigitalArsenal/lobsternaut)
 
 ## 💰 Token Information
 
@@ -47,7 +49,7 @@ If you prefer not to install hooks, keep the same behavior with a manual complet
 
 ## 🛠️ Tech Stack
 
-- C++17/20 (Core library)
+- C++17/20 (OrbPro compute engine)
 - WebAssembly (Emscripten)
 - JavaScript/TypeScript (API wrapper)
 - Solidity (Smart contracts)
@@ -56,12 +58,14 @@ If you prefer not to install hooks, keep the same behavior with a manual complet
 
 ## 📈 Access Tiers
 
-| Tier | Token Hold | Subscription | API Calls/Month |
-|------|-----------|--------------|-----------------|
-| Free | 0 | — | 100 |
-| Bronze | 10K $CLAW | $9.99/mo | 5,000 |
-| Silver | 50K $CLAW | $29.99/mo | 50,000 |
-| Gold | 200K $CLAW | $99.99/mo | Unlimited |
+| Tier | Price | Model | Key Additions |
+|------|-------|-------|---------------|
+| Free | $0 | Per seat | Conjunction assessment (CDMs), SGP4/SGP4-XP, high-def propagation, 3D globe |
+| Explorer | $10/mo | Per seat | Link sharing, 10 saved scenarios, exports, alerts, embed widget, bookmarks |
+| Analyst | $20/mo | Per seat | 100 saved scenarios, Basilisk simulator, Lambert/Hohmann planning, API access (25K/day) |
+| Operator | $30/mo | Per seat | Monte Carlo, launch/reentry and missile simulation, 500 scenarios, CA workflow |
+| Mission | $40/mo | Per seat | RPO/proximity ops, combat sim, EW, multi-domain modeling, unlimited scenarios |
+| AI Enabled | $70 baseline (usage-based) | Usage-based | AI copilots, autonomous workflow automation, priority AI compute, all Mission features |
 
 ## 🤝 Contributing
 
@@ -73,4 +77,4 @@ MIT License - See LICENSE file for details
 
 ---
 
-*Making orbital mechanics accessible to everyone through open-source technology and Web3 incentives.*
+*Making orbital mechanics accessible to everyone through transparent engineering references and Web3 incentives.*

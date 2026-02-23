@@ -6,9 +6,9 @@
 
 ## Overview
 
-Conjunction assessment is OpenClaw's flagship feature — analyzing the risk of two objects colliding in orbit. This is critical for the growing space debris problem affecting satellite operators globally.
+Conjunction assessment is Lobsternaut's flagship feature — analyzing the risk of two objects colliding in orbit. This is critical for the growing space debris problem affecting satellite operators globally.
 
-The baseline screening workflow is free and open-source as OpenClaw's shared space-safety utility.
+The baseline screening workflow is available in Lobsternaut's Free tier as the shared space-safety utility.
 
 ## User Stories
 
@@ -16,17 +16,18 @@ The baseline screening workflow is free and open-source as OpenClaw's shared spa
 2. **Aerospace Student**: "I want to understand how collision probability is calculated and see it visualized."
 3. **Space Enthusiast**: "I want to see which objects in orbit are closest to colliding right now."
 
-## Feature Tiers
+## Capability Availability (Tiered)
 
-| Capability | Free | Bronze | Silver | Gold |
-| --- | --- | --- | --- | --- |
-| Basic screening (miss distance + geometry) | Yes | Yes | Yes | Yes |
-| Full CDM parsing and analysis | No | Yes | Yes | Yes |
-| Monte Carlo risk assessment | No | No | Yes | Yes |
-| Collision avoidance maneuver planning | No | No | No | Yes |
-| Conjunction geometry visualization | Yes | Yes | Yes | Yes |
-| Historical conjunction database | No | No | Yes | Yes |
-| Real-time alerts | No | No | No | Yes |
+| Capability | Free | Explorer | Analyst | Operator | Mission | AI Enabled |
+| --- | --- | --- | --- | --- | --- | --- |
+| Conjunction assessment (CDMs) | Yes | Yes | Yes | Yes | Yes | Yes |
+| Basic screening (miss distance + geometry) | Yes | Yes | Yes | Yes | Yes | Yes |
+| Full CDM parsing and analysis | No | No | Yes | Yes | Yes | Yes |
+| Monte Carlo risk assessment | No | No | No | Yes | Yes | Yes |
+| Collision avoidance maneuver planning | No | No | Yes | Yes | Yes | Yes |
+| Conjunction geometry visualization | Yes | Yes | Yes | Yes | Yes | Yes |
+| Historical conjunction database | No | No | Yes | Yes | Yes | Yes |
+| Real-time alerts / managed response | No | No | No | Operator add-on | Mission add-on | AI Enabled add-on |
 
 ## Technical Requirements
 
@@ -41,14 +42,14 @@ The baseline screening workflow is free and open-source as OpenClaw's shared spa
 2. **Patera 2005** — Line-of-sight integration (more accurate for high Pc)
 3. **Alfriend 2D** — Analytic 2D method
 4. **Alfriend 3D** — Full 3D numerical integration (most accurate, slowest)
-5. **Monte Carlo** — Statistical sampling (Silver tier+, configurable samples)
+5. **Monte Carlo** — Statistical sampling (Operator/Mission/AI Enabled tier, configurable samples)
 
 ### Output
 - Probability of collision (Pc) with confidence interval
 - Time of closest approach (TCA)
 - Miss distance (radial, in-track, cross-track components)
 - Combined covariance ellipse visualization
-- Maneuver recommendation (Gold tier): delta-V magnitude, direction, timing
+- Maneuver recommendation (Analyst tier and above, including AI Enabled): delta-V magnitude, direction, timing
 
 ### Performance Requirements
 - Foster 1992 Pc calculation: < 10ms

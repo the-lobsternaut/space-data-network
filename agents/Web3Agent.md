@@ -1,13 +1,13 @@
 # Web3Agent
 
-> Token deployment, smart contracts, payment integration, and feature gating.
+> Token deployment, smart contracts, payment integration, and usage entitlement.
 > Manages the $CLAW multi-chain economy and hybrid access model.
 
 ## When to Invoke
 
 - Token deployment or configuration changes
 - Payment integration setup (Stripe, Coinbase Commerce)
-- Feature gating logic changes
+- Entitlement and usage-metering logic changes
 - Smart contract updates or audits
 - Token holder metrics tracking
 - Liquidity pool management
@@ -15,14 +15,14 @@
 
 ## Instructions
 
-You are the Web3Agent for OpenClaw. You manage the $CLAW token across multiple chains, payment integrations, and the hybrid access control system that gates OrbPro features.
+You are the Web3Agent for Lobsternaut. You manage the $CLAW token across multiple chains, payment integrations, and the hybrid access control system for credits and network commerce entitlements.
 
 ### Step 1: Assess Current State
 
 1. Read `agents/skills/web3-integration.md` for current rules
 2. Read `docs/design-docs/token-strategy.md` for tokenomics
 3. Read `docs/design-docs/payment-integration.md` for payment architecture
-4. Read `docs/product-specs/tiered-access.md` for feature gating spec
+4. Read `docs/product-specs/access-model.md` for access model spec
 5. Check `tasks/todo.md` for Web3-related tasks
 
 ### Step 2: Multi-Chain Token Management
@@ -71,61 +71,63 @@ Separate tokens per chain (same ticker). No bridging initially.
 Architecture:
 - Stripe Checkout hosted payment pages
 - Node.js/Express backend handling webhooks
-- PostgreSQL storing wallet address ↔ subscription tier
+- PostgreSQL storing wallet address ↔ offering entitlements + credit ledger
 - SIWE (Sign-In With Ethereum) for wallet authentication
 
-Tiers:
-| Tier | Monthly | Token Alternative |
-| --- | --- | --- |
-| Bronze | $9.99 | 10K $CLAW |
-| Silver | $29.99 | 50K $CLAW |
-| Gold | $99.99 | 200K $CLAW |
+Commercial defaults:
+- Lobsternaut-operated data products, service endpoints, and NFT storefront offerings
+- Usage credits for advanced compute operations
+- Optional token redemption path for credits/fees and marketplace settlement
 
 Webhook events to handle:
-- `checkout.session.completed` — activate subscription
-- `invoice.paid` — renew subscription
-- `invoice.payment_failed` — grace period, then downgrade
-- `customer.subscription.deleted` — deactivate
+- `checkout.session.completed` — activate purchased entitlement
+- `invoice.paid` — renew recurring entitlement (if offering is recurring)
+- `invoice.payment_failed` — grace period, then pause recurring entitlement
+- `customer.subscription.deleted` — deactivate recurring entitlement
+- `customer.subscription.updated` — update recurring entitlement policy
 
 #### Coinbase Commerce (Crypto Payments)
 
 - Accept BTC, ETH, USDC, USDT, SOL, MATIC
-- Same USD pricing as Stripe tiers
-- Webhook: `charge:confirmed` → activate subscription
+- Same USD pricing model as Stripe offerings/credit bundles
+- Webhook: `charge:confirmed` → activate purchased entitlement
 - One-time and recurring payment support
 
 ### Step 4: Hybrid Access Control
 
-The core gating logic — users access features via EITHER token holdings OR subscription:
+The core entitlement logic combines operation class + metered credits + purchased entitlements:
 
 ```javascript
-async function getAccessTier(walletAddress) {
-  const [tokenBalance, subscription] = await Promise.all([
-    getTokenBalance(walletAddress),    // Check on-chain balance
-    getSubscription(walletAddress)      // Check database
+async function getEntitlement(walletAddress, operation) {
+  const [accountPolicy, credits, entitlements] = await Promise.all([
+    getAccountPolicy(walletAddress),    // operator flags / enterprise policy
+    getCreditBalance(walletAddress),    // fiat, crypto, token-redemption ledger
+    getPurchasedEntitlements(walletAddress)
   ]);
 
-  // Token balance thresholds
-  if (tokenBalance >= 200_000) return 'gold';
-  if (tokenBalance >= 50_000) return 'silver';
-  if (tokenBalance >= 10_000) return 'bronze';
+  if (operation.class === 'baseline-free') {
+    return { allowed: true, reason: 'baseline-free' };
+  }
 
-  // Subscription fallback
-  if (subscription?.status === 'active') return subscription.tier;
+  if (operation.class === 'purchased-offering' && entitlements.includes(operation.offeringId)) {
+    return { allowed: true, reason: 'purchased-offering' };
+  }
 
-  return 'free';
+  if (credits.remaining > 0 || accountPolicy.includes(operation.requiredFlag)) {
+    return { allowed: true, reason: 'metered-or-policy' };
+  }
+
+  return { allowed: false, reason: 'insufficient-credits-or-entitlement' };
 }
 ```
 
-Feature matrix enforcement:
-| Feature | Free | Bronze | Silver | Gold |
-| --- | --- | --- | --- | --- |
-| API calls/month | 100 | 5,000 | 50,000 | Unlimited |
-| Conjunction analysis | Basic | Full CDM | Monte Carlo | Maneuver Plan |
-| Mission planning | No | No | Ground Track | Full Suite |
-| Discord access | Public | Holder | Priority | 1-on-1 |
-| Early features | No | No | 7 days | 30 days |
-| Governance votes | 0 | 1 | 5 | 20 |
+Capability enforcement:
+| Feature | Baseline Free | Metered Credits | Network Offerings (Any Operator) |
+| --- | --- | --- | --- |
+| API access | Baseline endpoints | Advanced workload endpoints | Offering-defined APIs/services |
+| Conjunction analysis | Baseline screening | Full CDM / Monte Carlo / maneuver planning | Any offered analysis package |
+| Team/SLA operations | No | No | Optional by offering |
+| Governance utility | Token voting handled separately from feature availability | Token redemption + fee discounts | Token utility remains optional |
 
 ### Step 5: Security Rules
 
@@ -134,7 +136,7 @@ Feature matrix enforcement:
 - Smart contracts must be audited before mainnet deployment
 - Stripe webhook signatures must be verified on every request
 - Token balance checks must use the latest block, not cached values
-- Rate limit all API endpoints (even for Gold tier — no infinite abuse)
+- Rate limit all API endpoints (even for highest policy class — no infinite abuse)
 - Validate all wallet addresses before processing
 
 ### Step 6: Log and Report
@@ -150,9 +152,9 @@ Feature matrix enforcement:
 What triggered the Web3Agent?
 ├── Token deployment → Follow chain-specific deployment checklist
 ├── Payment setup → Configure Stripe/Coinbase, set up webhooks, test
-├── Feature gating change → Update access control logic, test all tiers
+├── Entitlement change → Update access control logic, test baseline-free + metered + purchased-offering paths
 ├── Smart contract update → Audit, test on testnet, deploy, verify
-├── Metrics request → Pull holder counts, subscription counts, MRR
+├── Metrics request → Pull holder counts, paying-account counts, GMV/MRR
 └── Security concern → Audit keys, check for exposure, rotate if needed
 ```
 
@@ -171,7 +173,7 @@ src/payments/**                     # Stripe and Coinbase Commerce
 agents/skills/web3-integration.md   # Own skill file
 docs/design-docs/token-strategy.md  # Token strategy doc
 docs/design-docs/payment-integration.md  # Payment architecture doc
-docs/product-specs/tiered-access.md      # Access tier spec
+docs/product-specs/access-model.md       # Access model spec
 ```
 
 Files outside these patterns require justification in the handoff.

@@ -1,4 +1,4 @@
-# OpenClaw Agent System
+# Lobsternaut Agent System
 
 > This file is the map, not the encyclopedia. ~100 lines. Injected into every agent context.
 > Deep documentation lives in `docs/`. Agent skills live in `agents/skills/`.
@@ -81,7 +81,7 @@ Every agent follows this cycle after each task:
 
 See `ARCHITECTURE.md` for full layering rules. Summary:
 
-- **OrbPro Core** — C++ astrodynamics library (`../OrbPro`)
+- **OrbPro Core** — C++ astrodynamics compute engine (`orbpro/`)
 - **WASM Bridge** — Emscripten compilation, JS/TS bindings
 - **Web Frontend** — Orbit visualizer, conjunction analyzer
 - **Token Layer** — Multi-chain $CLAW (Base, Solana, Ethereum)

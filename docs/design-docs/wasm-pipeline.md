@@ -58,8 +58,8 @@ Users load only what they need. Core module is required; others are optional.
 Idiomatic TypeScript wrapper abstracting WASM complexity:
 
 ```typescript
-// @openclaw/orbpro
-import { Propagator, ConjunctionAnalyzer, type AccessTier } from '@openclaw/orbpro';
+// @lobsternaut/orbpro
+import { Propagator, ConjunctionAnalyzer, type AccessTier } from '@lobsternaut/orbpro';
 
 // Initialize (loads WASM, one-time)
 await OrbPro.initialize();
@@ -98,7 +98,7 @@ TypeScript definitions auto-generated from these bindings.
 ## npm Package Structure
 
 ```
-@openclaw/orbpro/
+@lobsternaut/orbpro/
 ├── dist/
 │   ├── orbpro-core.wasm
 │   ├── orbpro-core.js          # JS glue code

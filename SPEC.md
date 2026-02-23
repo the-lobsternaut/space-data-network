@@ -1,11 +1,11 @@
 # SPEC — Technical Specification (Binding Contract)
 
-> This is the binding technical contract for OpenClaw. Agents treat this as authoritative.
+> This is the binding technical contract for Lobsternaut. Agents treat this as authoritative.
 > Business strategy lives in `STRATEGIC_PLAN.md`. This file defines what "done" looks like technically.
 
 ## Product Statement
 
-OpenClaw is a professional-grade astrodynamics toolkit that makes orbital mechanics accessible to everyone — from aerospace engineers to space enthusiasts. It combines an open-source C++ library (OrbPro), WebAssembly compilation for browser-based use, multi-chain token economics ($CLAW), and an autonomous AI agent system.
+Lobsternaut is a professional-grade astrodynamics toolkit that makes orbital mechanics accessible to everyone — from aerospace engineers to space enthusiasts. It combines the OrbPro C++ compute engine, WebAssembly compilation for browser-based use, multi-chain token economics ($CLAW), and an autonomous AI agent system.
 
 **For**: Satellite operators, aerospace engineers, space enthusiasts, university researchers
 **Core value**: Professional astrodynamics capabilities accessible via browser, no local installation required
@@ -14,7 +14,7 @@ OpenClaw is a professional-grade astrodynamics toolkit that makes orbital mechan
 
 1. **Working WASM build**: OrbPro compiles to WebAssembly and runs in the browser with correct numerical results
 2. **Conjunction assessment**: Users can upload TLE data or CDMs and get collision probability analysis
-3. **Token deployment**: $CLAW deployed on Base with liquidity and functional feature gating
+3. **Token deployment**: $CLAW deployed on Base with liquidity and functional marketplace/governance utility
 4. **Content pipeline**: Automated educational content generation across X, TikTok, LinkedIn, YouTube
 5. **Payment integration**: Stripe and Coinbase Commerce accepting payments and gating features
 6. **Community**: Discord with token-gated channels and active engagement
@@ -36,7 +36,7 @@ These are specific, verifiable conditions — not vague goals:
 
 1. **WASM correctness**: OrbPro WASM output matches C++ native output within R-004 tolerances (see build-pipeline.md)
 2. **Conjunction analysis**: Given a known CDM test case (Foster 1992), collision probability matches reference within 1% relative error
-3. **Token gating**: A wallet with 10K $CLAW gets Bronze access; 0 $CLAW gets Free tier only
+3. **Tier gating**: Explorer/Analyst/Operator/Mission/AI Enabled subscriptions unlock the correct tier capabilities; Free remains available without payment
 4. **Stripe flow**: Complete checkout → webhook → subscription active → feature unlocked, end-to-end
 5. **Content generation**: ContentAgent produces 3 platform-ready posts from a single conjunction event trigger
 6. **Cross-link integrity**: Zero broken links across all `docs/` files
@@ -47,6 +47,7 @@ These are specific, verifiable conditions — not vague goals:
 - No TODOs, FIXMEs, or placeholders in shipped code
 - No `any` types in TypeScript
 - Every numerical algorithm has a cited reference (R-003 in build-pipeline.md)
+- Upstream open-source code used by OrbPro is linked and attributed in `docs/references/orbpro-upstream-sources.md`
 - Every public API function has tests
 - Validation tests use reference data from STK, GMAT, or published papers
 - No secrets in the repository (R-001 in web3-integration.md)
@@ -61,6 +62,7 @@ These are specific, verifiable conditions — not vague goals:
 - External APIs are wrapped (not called directly from business logic)
 - WASM bindings generated from Embind (not hand-written)
 - TypeScript definitions auto-generated from Embind metadata
+- OrbPro is maintained as product code, not as a separately maintained open-source library distribution
 
 ## Dependency Philosophy
 
@@ -73,7 +75,7 @@ These are specific, verifiable conditions — not vague goals:
 
 **Requires justification**: Any dependency not on the allowed list needs a design doc, license check, Emscripten compatibility assessment, and bundle size impact measurement.
 
-**Banned**: Bleeding-edge frameworks, unmaintained libraries, GPL-licensed code in the core library
+**Banned**: Bleeding-edge frameworks, unmaintained libraries, GPL-licensed code in the OrbPro core codebase
 
 ## Scope Model
 
@@ -83,8 +85,8 @@ These are specific, verifiable conditions — not vague goals:
 2. WASM compilation with working browser demo
 3. Conjunction assessment (basic: CDM parsing + collision probability)
 4. $CLAW token on Base with Uniswap liquidity
-5. Stripe subscription checkout (3 tiers)
-6. Feature gating middleware (token balance OR subscription)
+5. Stripe/Coinbase checkout and webhook flow for six tiers (AI Enabled is usage-based)
+6. Tier-gating middleware enforcing Free/Explorer/Analyst/Operator/Mission/AI Enabled capabilities
 7. Content pipeline generating X/Twitter posts
 
 ### Nice-to-Have (Post-MVP)

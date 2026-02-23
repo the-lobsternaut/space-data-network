@@ -133,97 +133,97 @@ All plists go in `~/Library/LaunchAgents/`. Load with `launchctl load <plist>`.
 
 #### Content Check (every 4 hours)
 
-File: `~/Library/LaunchAgents/com.openclaw.content-check.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.content-check.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.content-check</string>
+    <string>com.lobsternaut.content-check</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh content-check</string>
+        <string>/path/to/lobsternaut/heartbeat.sh content-check</string>
     </array>
     <key>StartInterval</key>
     <integer>14400</integer>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-content-check.log</string>
+    <string>/tmp/lobsternaut-content-check.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-content-check.err</string>
+    <string>/tmp/lobsternaut-content-check.err</string>
 </dict>
 </plist>
 ```
 
 #### Memory Hygiene (every 6 hours)
 
-File: `~/Library/LaunchAgents/com.openclaw.memory-hygiene.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.memory-hygiene.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.memory-hygiene</string>
+    <string>com.lobsternaut.memory-hygiene</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh memory-hygiene</string>
+        <string>/path/to/lobsternaut/heartbeat.sh memory-hygiene</string>
     </array>
     <key>StartInterval</key>
     <integer>21600</integer>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-memory-hygiene.log</string>
+    <string>/tmp/lobsternaut-memory-hygiene.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-memory-hygiene.err</string>
+    <string>/tmp/lobsternaut-memory-hygiene.err</string>
 </dict>
 </plist>
 ```
 
 #### Build Health (every 12 hours)
 
-File: `~/Library/LaunchAgents/com.openclaw.build-health.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.build-health.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.build-health</string>
+    <string>com.lobsternaut.build-health</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh build-health</string>
+        <string>/path/to/lobsternaut/heartbeat.sh build-health</string>
     </array>
     <key>StartInterval</key>
     <integer>43200</integer>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-build-health.log</string>
+    <string>/tmp/lobsternaut-build-health.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-build-health.err</string>
+    <string>/tmp/lobsternaut-build-health.err</string>
 </dict>
 </plist>
 ```
 
 #### Daily Performance Report (9 AM)
 
-File: `~/Library/LaunchAgents/com.openclaw.daily-report.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.daily-report.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.daily-report</string>
+    <string>com.lobsternaut.daily-report</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh daily-report</string>
+        <string>/path/to/lobsternaut/heartbeat.sh daily-report</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -233,28 +233,28 @@ File: `~/Library/LaunchAgents/com.openclaw.daily-report.plist`
         <integer>0</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-daily-report.log</string>
+    <string>/tmp/lobsternaut-daily-report.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-daily-report.err</string>
+    <string>/tmp/lobsternaut-daily-report.err</string>
 </dict>
 </plist>
 ```
 
 #### Nightly Memory Review (11 PM)
 
-File: `~/Library/LaunchAgents/com.openclaw.nightly-review.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.nightly-review.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.nightly-review</string>
+    <string>com.lobsternaut.nightly-review</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh nightly-review</string>
+        <string>/path/to/lobsternaut/heartbeat.sh nightly-review</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -264,28 +264,28 @@ File: `~/Library/LaunchAgents/com.openclaw.nightly-review.plist`
         <integer>0</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-nightly-review.log</string>
+    <string>/tmp/lobsternaut-nightly-review.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-nightly-review.err</string>
+    <string>/tmp/lobsternaut-nightly-review.err</string>
 </dict>
 </plist>
 ```
 
 #### Weekly Quality Audit (Sunday 10 AM)
 
-File: `~/Library/LaunchAgents/com.openclaw.weekly-audit.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.weekly-audit.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.weekly-audit</string>
+    <string>com.lobsternaut.weekly-audit</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh weekly-audit</string>
+        <string>/path/to/lobsternaut/heartbeat.sh weekly-audit</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -297,28 +297,28 @@ File: `~/Library/LaunchAgents/com.openclaw.weekly-audit.plist`
         <integer>0</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-weekly-audit.log</string>
+    <string>/tmp/lobsternaut-weekly-audit.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-weekly-audit.err</string>
+    <string>/tmp/lobsternaut-weekly-audit.err</string>
 </dict>
 </plist>
 ```
 
 #### Weekly Token Metrics (Monday 9 AM)
 
-File: `~/Library/LaunchAgents/com.openclaw.weekly-metrics.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.weekly-metrics.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.weekly-metrics</string>
+    <string>com.lobsternaut.weekly-metrics</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh weekly-metrics</string>
+        <string>/path/to/lobsternaut/heartbeat.sh weekly-metrics</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -330,28 +330,28 @@ File: `~/Library/LaunchAgents/com.openclaw.weekly-metrics.plist`
         <integer>0</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-weekly-metrics.log</string>
+    <string>/tmp/lobsternaut-weekly-metrics.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-weekly-metrics.err</string>
+    <string>/tmp/lobsternaut-weekly-metrics.err</string>
 </dict>
 </plist>
 ```
 
 #### Weekly Skill Review (Friday 3 PM)
 
-File: `~/Library/LaunchAgents/com.openclaw.weekly-skills.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.weekly-skills.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.weekly-skills</string>
+    <string>com.lobsternaut.weekly-skills</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh weekly-skills</string>
+        <string>/path/to/lobsternaut/heartbeat.sh weekly-skills</string>
     </array>
     <key>StartCalendarInterval</key>
     <dict>
@@ -363,28 +363,28 @@ File: `~/Library/LaunchAgents/com.openclaw.weekly-skills.plist`
         <integer>0</integer>
     </dict>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-weekly-skills.log</string>
+    <string>/tmp/lobsternaut-weekly-skills.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-weekly-skills.err</string>
+    <string>/tmp/lobsternaut-weekly-skills.err</string>
 </dict>
 </plist>
 ```
 
 #### Auto-Push on File Changes (WatchPaths)
 
-File: `~/Library/LaunchAgents/com.openclaw.auto-sync.plist`
+File: `~/Library/LaunchAgents/com.lobsternaut.auto-sync.plist`
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.auto-sync</string>
+    <string>com.lobsternaut.auto-sync</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/heartbeat.sh auto-sync</string>
+        <string>/path/to/lobsternaut/heartbeat.sh auto-sync</string>
     </array>
     <key>WatchPaths</key>
     <array>
@@ -392,9 +392,9 @@ File: `~/Library/LaunchAgents/com.openclaw.auto-sync.plist`
         <string>/path/to/lobsternaut/tasks</string>
     </array>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw-auto-sync.log</string>
+    <string>/tmp/lobsternaut-auto-sync.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw-auto-sync.err</string>
+    <string>/tmp/lobsternaut-auto-sync.err</string>
 </dict>
 </plist>
 ```
@@ -402,19 +402,19 @@ File: `~/Library/LaunchAgents/com.openclaw.auto-sync.plist`
 ### Loading All LaunchAgents
 
 ```bash
-# Load all OpenClaw LaunchAgents
-for plist in ~/Library/LaunchAgents/com.openclaw.*.plist; do
+# Load all Lobsternaut LaunchAgents
+for plist in ~/Library/LaunchAgents/com.lobsternaut.*.plist; do
   launchctl load "$plist"
 done
 
 # Verify they are running
-launchctl list | grep openclaw
+launchctl list | grep lobsternaut
 
 # Unload a specific agent
-launchctl unload ~/Library/LaunchAgents/com.openclaw.content-check.plist
+launchctl unload ~/Library/LaunchAgents/com.lobsternaut.content-check.plist
 
 # Check logs
-tail -f /tmp/openclaw-*.log
+tail -f /tmp/lobsternaut-*.log
 ```
 
 ### Why LaunchAgents Over Cron
@@ -457,11 +457,11 @@ To trigger an immediate re-check after finding errors:
 
 ```bash
 # Force an immediate run of a LaunchAgent (does not change the schedule)
-launchctl kickstart gui/$(id -u)/com.openclaw.build-health
+launchctl kickstart gui/$(id -u)/com.lobsternaut.build-health
 
 # The heartbeat.sh script should:
 # 1. Run the sweep
-# 2. If errors found: write a flag file /tmp/openclaw-<name>-recheck
+# 2. If errors found: write a flag file /tmp/lobsternaut-<name>-recheck
 # 3. A short-interval watcher plist monitors for the flag file (WatchPaths)
 # 4. Watcher triggers a re-run, then removes the flag
 ```
@@ -483,10 +483,10 @@ and do not use adaptive frequency.
 1. Define the trigger type (`StartInterval`, `StartCalendarInterval`, `WatchPaths`, or `RunAtLoad`)
 2. Assign the owning agent
 3. List the specific actions (numbered, concrete) in the schedule section above
-4. Create the plist in `~/Library/LaunchAgents/com.openclaw.<name>.plist`
-5. Load it: `launchctl load ~/Library/LaunchAgents/com.openclaw.<name>.plist`
-6. Test with a manual trigger: `/path/to/openclaw/heartbeat.sh <name>`
-7. Check logs: `tail /tmp/openclaw-<name>.log`
+4. Create the plist in `~/Library/LaunchAgents/com.lobsternaut.<name>.plist`
+5. Load it: `launchctl load ~/Library/LaunchAgents/com.lobsternaut.<name>.plist`
+6. Test with a manual trigger: `/path/to/lobsternaut/heartbeat.sh <name>`
+7. Check logs: `tail /tmp/lobsternaut-<name>.log`
 
 ## Heartbeat Log
 

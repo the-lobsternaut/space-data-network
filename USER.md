@@ -4,7 +4,7 @@
 
 - **Organization**: DigitalArsenal
 - **GitHub**: DigitalArsenal
-- **Project**: OpenClaw — astrodynamics AI agent platform
+- **Project**: Lobsternaut — astrodynamics AI agent platform
 
 ## Engineering Preferences
 

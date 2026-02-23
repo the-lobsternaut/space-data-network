@@ -1,11 +1,11 @@
-# OpenClaw Autonomous Agent Setup Guide
+# Lobsternaut Autonomous Agent Setup Guide
 
-> Everything you need to set up a fully autonomous OpenClaw agent instance.
+> Everything you need to set up a fully autonomous Lobsternaut agent instance.
 > Covers: hardware, accounts, API keys, phone number, identity, and services.
 
 ## Overview
 
-To make OpenClaw a "real boy" — a fully autonomous agent that can post content, deploy tokens, process payments, and manage community without constant human intervention — you need the following infrastructure.
+To make Lobsternaut a "real boy" — a fully autonomous agent that can post content, deploy tokens, process payments, and manage community without constant human intervention — you need the following infrastructure.
 
 ---
 
@@ -13,7 +13,7 @@ To make OpenClaw a "real boy" — a fully autonomous agent that can post content
 
 ### Your Setup: Mac Mini (Dedicated, Always-On)
 
-You have a Mac Mini, which is ideal — best performance per watt, runs macOS natively (needed for iOS/Xcode builds if you do a mobile app), and more than enough power for the entire OpenClaw agent stack.
+You have a Mac Mini, which is ideal — best performance per watt, runs macOS natively (needed for iOS/Xcode builds if you do a mobile app), and more than enough power for the entire Lobsternaut agent stack.
 
 **Setup for always-on operation**:
 
@@ -21,11 +21,11 @@ You have a Mac Mini, which is ideal — best performance per watt, runs macOS na
 2. **Auto-restart on power failure**: System Settings -> Energy -> Start up automatically after a power failure (enable)
 3. **Enable SSH**: System Settings -> General -> Sharing -> Remote Login (enable) — lets you manage remotely
 4. **Ethernet over Wi-Fi**: Use wired ethernet if possible for reliability
-5. **Dedicated macOS user** (optional but recommended): Create a separate macOS user account `openclaw` to isolate the agent's environment, credentials, and processes from your personal account
+5. **Dedicated macOS user** (optional but recommended): Create a separate macOS user account `lobsternaut` to isolate the agent's environment, credentials, and processes from your personal account
 6. **Homebrew packages**: `brew install cmake emscripten node postgresql@16 gh`
 7. **Launch agents**: Use `launchd` plists to auto-start the agent processes on boot (see below)
 
-**Auto-start agent on boot** (create `~/Library/LaunchAgents/com.openclaw.agent.plist`):
+**Auto-start agent on boot** (create `~/Library/LaunchAgents/com.lobsternaut.agent.plist`):
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -33,21 +33,21 @@ You have a Mac Mini, which is ideal — best performance per watt, runs macOS na
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.openclaw.agent</string>
+    <string>com.lobsternaut.agent</string>
     <key>ProgramArguments</key>
     <array>
         <string>/bin/bash</string>
         <string>-c</string>
-        <string>/path/to/openclaw/start.sh</string>
+        <string>/path/to/lobsternaut/start.sh</string>
     </array>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/tmp/openclaw.log</string>
+    <string>/tmp/lobsternaut.log</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/openclaw.err</string>
+    <string>/tmp/lobsternaut.err</string>
 </dict>
 </plist>
 ```
@@ -89,7 +89,7 @@ A dedicated phone number is needed for 2FA, account verification, and social med
 **Setup**:
 1. Get a cheap Android phone or use a spare phone (iPhone SE works)
 2. Activate eSIM with chosen carrier
-3. Use this number exclusively for OpenClaw accounts
+3. Use this number exclusively for Lobsternaut accounts
 4. Set up SMS forwarding or use a 2FA app where possible
 
 ### Alternative: Google Voice
@@ -104,13 +104,13 @@ A dedicated phone number is needed for 2FA, account verification, and social med
 
 ### Dedicated Email (Required)
 
-Create a dedicated email for all OpenClaw accounts:
+Create a dedicated email for all Lobsternaut accounts:
 
 | Provider | Recommendation | Notes |
 | --- | --- | --- |
-| **Gmail** | `openclaw.agent@gmail.com` | Free, widely accepted, good API |
-| **ProtonMail** | `openclaw@proton.me` | Privacy-focused, free tier |
-| **Custom domain** | `agent@openclaw.ai` | Professional, requires domain purchase |
+| **Gmail** | `lobsternaut.agent@gmail.com` | Free, widely accepted, good API |
+| **ProtonMail** | `lobsternaut@proton.me` | Privacy-focused, free tier |
+| **Custom domain** | `agent@lobsternaut.ai` | Professional, requires domain purchase |
 
 **Setup**:
 1. Create the email account using the dedicated phone number
@@ -122,7 +122,7 @@ Create a dedicated email for all OpenClaw accounts:
 
 ## 4. Apple ID (Required for iOS App Distribution)
 
-If OpenClaw will have a mobile app (for RevenueCat integration, App Store presence):
+If Lobsternaut will have a mobile app (for RevenueCat integration, App Store presence):
 
 ### Apple Developer Account
 
@@ -133,10 +133,10 @@ If OpenClaw will have a mobile app (for RevenueCat integration, App Store presen
 | Certificates + Provisioning | Included | Managed via Xcode or CLI |
 
 **Setup**:
-1. Go to appleid.apple.com, create Apple ID with OpenClaw email
+1. Go to appleid.apple.com, create Apple ID with Lobsternaut email
 2. Enroll in Apple Developer Program ($99/year) at developer.apple.com
 3. Set up code signing certificates
-4. Configure App Store Connect for the OpenClaw app
+4. Configure App Store Connect for the Lobsternaut app
 
 ### If No iOS App
 
@@ -159,15 +159,15 @@ Create all accounts using the dedicated email and phone number.
 
 | Platform | Username | Account Type | Cost | Notes |
 | --- | --- | --- | --- | --- |
-| **X/Twitter** | `@OpenClawAI` | Standard | Free | Primary engagement platform |
-| **TikTok** | `@OpenClawAI` | Creator | Free | Warm up 2 weeks before posting |
-| **LinkedIn** | OpenClaw company page | Company | Free | Professional content |
-| **YouTube** | OpenClaw | Brand account | Free | Tutorials and explainers |
-| **Discord** | OpenClaw server | Community | Free (Nitro $10/mo optional) | Token-gated channels |
-| **Threads** | `@OpenClawAI` | Standard | Free | Casual engagement |
-| **Farcaster** | `@openclaw` | Standard | Free | Web3-native community |
-| **GitHub** | `DigitalArsenal/openclaw` | Organization | Free | Code hosting |
-| **Reddit** | `u/OpenClawAI` | Standard | Free | Optional, community Q&A |
+| **X/Twitter** | `@LobsternautAI` | Standard | Free | Primary engagement platform |
+| **TikTok** | `@LobsternautAI` | Creator | Free | Warm up 2 weeks before posting |
+| **LinkedIn** | Lobsternaut company page | Company | Free | Professional content |
+| **YouTube** | Lobsternaut | Brand account | Free | Tutorials and explainers |
+| **Discord** | Lobsternaut server | Community | Free (Nitro $10/mo optional) | Token-gated channels |
+| **Threads** | `@LobsternautAI` | Standard | Free | Casual engagement |
+| **Farcaster** | `@lobsternaut` | Standard | Free | Web3-native community |
+| **GitHub** | `DigitalArsenal/lobsternaut` | Organization | Free | Code hosting |
+| **Reddit** | `u/LobsternautAI` | Standard | Free | Optional, community Q&A |
 
 ### TikTok Account Warmup (Critical)
 
@@ -214,7 +214,7 @@ This is the ONE thing that requires a human with a phone. After warmup, the agen
 | Service | Purpose | Cost | Notes |
 | --- | --- | --- | --- |
 | **RevenueCat** | Mobile subscription analytics | Free < $2.5K MRR | Only if building mobile app |
-| **Cloudflare** | Domain, CDN, DDoS protection | Free tier | openclaw.ai domain |
+| **Cloudflare** | Domain, CDN, DDoS protection | Free tier | lobsternaut.ai domain |
 | **Vercel/Netlify** | Frontend hosting | Free tier | For web demos |
 | **Sentry** | Error monitoring | Free tier | Track production errors |
 | **Plausible/Umami** | Privacy-friendly analytics | $9/mo or self-host | Website traffic |
@@ -225,7 +225,7 @@ This is the ONE thing that requires a human with a phone. After warmup, the agen
 
 | Item | Provider | Cost | Notes |
 | --- | --- | --- | --- |
-| `openclaw.ai` domain | Cloudflare / Namecheap | ~$12-50/year | .ai domains are pricier |
+| `lobsternaut.ai` domain | Cloudflare / Namecheap | ~$12-50/year | .ai domains are pricier |
 | SSL certificate | Cloudflare (free) | Free | Auto-provisioned |
 | Logo design | AI-generated or designer | $0-$200 | Optimized for PFP (circle crop) |
 | Banner images | AI-generated | $0 | Use OpenAI API or Midjourney |
@@ -305,7 +305,7 @@ This is the ONE thing that requires a human with a phone. After warmup, the agen
 - [ ] Set up Postiz account, connect TikTok (after warmup)
 - [ ] Set up Alchemy account (Base + Ethereum RPC)
 - [ ] Set up Helius account (Solana RPC)
-- [ ] Register domain (openclaw.ai)
+- [ ] Register domain (lobsternaut.ai)
 - [ ] Set up Cloudflare
 
 ### Week 1: Token Launch Prep
@@ -352,7 +352,7 @@ This is the ONE thing that requires a human with a phone. After warmup, the agen
 | Mac Mini electricity | ~$5-10 |
 | Phone (Mint Mobile prepaid) | $15 |
 | OpenAI API (3 slideshows/day) | ~$45 |
-| Domain (openclaw.ai annualized) | ~$4 |
+| Domain (lobsternaut.ai annualized) | ~$4 |
 | **Total** | **~$69-74/mo** |
 
 ### Full Production Setup (Mac Mini + VPS Backend)
@@ -386,7 +386,7 @@ This is the ONE thing that requires a human with a phone. After warmup, the agen
 
 - [ ] All accounts use unique, strong passwords (use a password manager)
 - [ ] 2FA enabled on every account (preferably TOTP, not SMS)
-- [ ] Dedicated phone number used only for OpenClaw accounts
+- [ ] Dedicated phone number used only for Lobsternaut accounts
 - [ ] Private keys stored in environment variables, NEVER in code
 - [ ] Hot wallet holds < $1K in operational funds
 - [ ] Treasury in hardware wallet multisig

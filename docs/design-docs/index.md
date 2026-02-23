@@ -5,7 +5,7 @@
 | Document | Status | Description |
 | --- | --- | --- |
 | [core-beliefs.md](core-beliefs.md) | Active | Agent-first operating principles (golden rules) |
-| [orbpro-architecture.md](orbpro-architecture.md) | Active | C++ library module design and interfaces |
+| [orbpro-architecture.md](orbpro-architecture.md) | Active | C++ engine module design and interfaces |
 | [wasm-pipeline.md](wasm-pipeline.md) | Active | Emscripten build pipeline and JS bindings |
 | [token-strategy.md](token-strategy.md) | Active | Multi-chain $CLAW tokenomics and deployment |
 | [payment-integration.md](payment-integration.md) | Active | Stripe + Coinbase Commerce architecture |

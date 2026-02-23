@@ -1,7 +1,7 @@
 # Memory Management Skill — Configuration and Patterns
 
 > Prevents the three memory failure modes that kill agent effectiveness.
-> Source: Kevin Simback's OpenClaw memory guide (x-links/7).
+> Source: Kevin Simback's Lobsternaut memory guide (x-links/7).
 > Every agent must follow these protocols.
 
 ## The Three Failure Modes
@@ -209,7 +209,7 @@ Everything in Obsidian vault becomes searchable by agents. Obsidian 1.12 CLI all
 
 ## Multi-Agent Memory Architecture
 
-For OpenClaw's 5-agent system:
+For Lobsternaut's 5-agent system:
 
 | Layer | What | How |
 | --- | --- | --- |

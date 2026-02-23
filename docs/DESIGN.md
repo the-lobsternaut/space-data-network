@@ -11,5 +11,5 @@ For detailed design documentation, see the `design-docs/` directory:
 For product specifications, see `product-specs/`:
 
 - [Conjunction Assessment](product-specs/conjunction-assessment.md) — Flagship feature
-- [Tiered Access](product-specs/tiered-access.md) — Feature gating
+- [Access Model](product-specs/access-model.md) — Six-tier access (five per-seat + AI Enabled usage-based, no usage credits)
 - [Social Media Strategy](product-specs/social-media-strategy.md) — Content pipeline
