@@ -51,3 +51,10 @@ files changed, scope compliance, concerns, suggestions, metrics).
 **What happened**: Removed commitments to a separately maintained open-source OrbPro library, updated strategy/spec/access docs to baseline-free terminology, and added `docs/references/orbpro-upstream-sources.md` as the canonical upstream-source link registry.
 **Rule added**: pending promotion
 **Lesson**: When product direction changes, update strategy, spec, access model, and agent skill language together to prevent policy drift.
+
+### [2026-02-23] Added Lobsternaut software strategy track (PlanningAgent)
+
+**Outcome**: Success
+**What happened**: Updated strategic/spec docs to include Lobsternaut software as a NanoClaw-compatible client with embedded SDN node, bring-your-own inference provider support, and SpaceAware AI subscription-gated MCP workflows replacing per-token AI gating.
+**Rule added**: pending promotion
+**Lesson**: When entitlement mechanics shift (token gating to subscription gating), document the runtime architecture and access rules together to avoid implementation ambiguity.

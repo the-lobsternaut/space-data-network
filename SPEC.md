@@ -5,10 +5,10 @@
 
 ## Product Statement
 
-Lobsternaut is a professional-grade astrodynamics toolkit that makes orbital mechanics accessible to everyone — from aerospace engineers to space enthusiasts. It combines the OrbPro C++ compute engine, WebAssembly compilation for browser-based use, multi-chain token economics ($CLAW), and an autonomous AI agent system.
+Lobsternaut is a professional-grade astrodynamics toolkit that makes orbital mechanics accessible to everyone — from aerospace engineers to space enthusiasts. It combines the OrbPro C++ compute engine, Lobsternaut client software (NanoClaw-compatible) with embedded SDN node, bring-your-own inference provider routing, SpaceAware AI subscription-gated MCP automation, multi-chain token economics ($CLAW), and an autonomous AI agent system.
 
 **For**: Satellite operators, aerospace engineers, space enthusiasts, university researchers
-**Core value**: Professional astrodynamics capabilities accessible via browser, no local installation required
+**Core value**: Professional astrodynamics capabilities accessible via browser and Lobsternaut client runtime
 
 ## Success Criteria (Ranked)
 
@@ -18,6 +18,7 @@ Lobsternaut is a professional-grade astrodynamics toolkit that makes orbital mec
 4. **Content pipeline**: Automated educational content generation across X, TikTok, LinkedIn, YouTube
 5. **Payment integration**: Stripe and Coinbase Commerce accepting payments and gating features
 6. **Community**: Discord with token-gated channels and active engagement
+7. **Client runtime**: Lobsternaut software launches with embedded SDN node and supports local/paid inference providers
 
 ## Hard Limits
 
@@ -41,6 +42,7 @@ These are specific, verifiable conditions — not vague goals:
 5. **Content generation**: ContentAgent produces 3 platform-ready posts from a single conjunction event trigger
 6. **Cross-link integrity**: Zero broken links across all `docs/` files
 7. **Build pipeline**: Push to main → CI runs all checks → green in < 10 minutes
+8. **Embedded SDN + MCP path**: Lobsternaut client joins SDN, user selects local or paid inference provider, and SpaceAware AI subscription enables embedded MCP workflows
 
 ## Non-Negotiables
 
@@ -87,7 +89,8 @@ These are specific, verifiable conditions — not vague goals:
 4. $CLAW token on Base with Uniswap liquidity
 5. Stripe/Coinbase checkout and webhook flow for six tiers (AI Enabled is usage-based)
 6. Tier-gating middleware enforcing Free/Explorer/Analyst/Operator/Mission/AI Enabled capabilities
-7. Content pipeline generating X/Twitter posts
+7. Lobsternaut client shell with embedded SDN node and provider abstraction for local/paid inference
+8. Content pipeline generating X/Twitter posts
 
 ### Nice-to-Have (Post-MVP)
 

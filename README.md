@@ -7,9 +7,12 @@ Lobsternaut is a comprehensive astrodynamics AI platform combining professional-
 ## 🚀 Key Features
 
 - **OrbPro C++ Compute Engine**: Production-grade astrodynamics compiled to WebAssembly
+- **Lobsternaut Software Client**: NanoClaw-compatible runtime with embedded SDN node
 - **Multi-Chain Tokens**: Deployed on Base, Solana, Ethereum
 - **Tiered Access**: Six tiers (five per-seat + AI Enabled usage-based)
 - **Flagship Feature**: Conjunction assessment and collision avoidance
+- **Bring Your Own Inference**: Use local models or paid inference providers
+- **Embedded MCP**: SpaceAware AI subscription unlocks MCP-powered automation workflows
 - **Source Transparency**: Published links to upstream open-source astrodynamics code used to build OrbPro
 
 ## 📚 Documentation
@@ -65,7 +68,7 @@ If you prefer not to install hooks, keep the same behavior with a manual complet
 | Analyst | $20/mo | Per seat | 100 saved scenarios, Basilisk simulator, Lambert/Hohmann planning, API access (25K/day) |
 | Operator | $30/mo | Per seat | Monte Carlo, launch/reentry and missile simulation, 500 scenarios, CA workflow |
 | Mission | $40/mo | Per seat | RPO/proximity ops, combat sim, EW, multi-domain modeling, unlimited scenarios |
-| AI Enabled | $70 baseline (usage-based) | Usage-based | AI copilots, autonomous workflow automation, priority AI compute, all Mission features |
+| AI Enabled | $70 baseline (usage-based) | Usage-based | SpaceAware AI subscription, embedded MCP workflows, AI copilots, autonomous workflow automation, priority AI compute, all Mission features |
 
 ## 🤝 Contributing
 

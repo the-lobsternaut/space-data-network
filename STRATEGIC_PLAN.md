@@ -4,7 +4,7 @@
 
 ### Strategic Implementation Plan
 
-**Multi-Chain Token Economy • OrbPro Compute Engine • Web3 Integration**
+**Multi-Chain Token Economy • Lobsternaut Software • OrbPro Compute Engine**
 
 ---
 
@@ -15,7 +15,7 @@
 3. [Technical Architecture](#3-technical-architecture)
 4. [Multi-Chain Token Strategy](#4-multi-chain-token-strategy)
 5. [Capability NFT Marketplace & On-Orbit Resource Rights](#5-capability-nft-marketplace--on-orbit-resource-rights)
-6. [Crypto Wallet Ecosystem](#6-crypto-wallet-ecosystem)
+6. [Lobsternaut Software (NanoClaw Clone)](#6-lobsternaut-software-nanoclaw-clone)
 7. [Payment Integration Strategy](#7-payment-integration-strategy)
 8. [Tiered Access Model](#8-tiered-access-model)
 9. [Social Media & Community Strategy](#9-social-media--community-strategy)
@@ -27,11 +27,12 @@
 
 ## 1. Executive Summary
 
-Lobsternaut is a comprehensive astrodynamics AI agent platform that bridges cutting-edge orbital mechanics software with Web3 tokenomics and mainstream payment accessibility. The project combines three core elements:
+Lobsternaut is a comprehensive astrodynamics AI agent platform that bridges cutting-edge orbital mechanics software with Web3 tokenomics and mainstream payment accessibility. The project combines four core elements:
 
 - **OrbPro Compute Engine**: Production-grade C++ astrodynamics software compiled to WebAssembly for browser-native performance
 - **Multi-Chain Token**: Deployed across Base, Solana, and Ethereum for marketplace settlement, discounts, and governance utility
 - **Fiat On-Ramps**: Stripe and Coinbase Commerce integration enabling credit card payments for mainstream adoption
+- **Lobsternaut Software**: NanoClaw-compatible clone with embedded SDN node, bring-your-own inference provider support, and embedded MCP workflows for SpaceAware AI subscribers
 
 The flagship feature is **conjunction assessment and collision avoidance**—critical for the growing space debris problem affecting satellite operators globally. By making professional-grade astrodynamics tools accessible through Web3 infrastructure while maintaining traditional payment options, Lobsternaut democratizes orbital mechanics expertise.
 
@@ -56,6 +57,7 @@ Lobsternaut now extends into **on-orbit capability commoditization** through sig
 5. **Educational Impact**: Create 100+ tutorials and demos making orbital mechanics accessible to students worldwide
 6. **Capability Markets**: Launch a production marketplace for on-orbit capability NFTs (ex: discrete imaging windows, revisit rights, bandwidth time buckets)
 7. **Free-Tier Access + Source Transparency**: Keep core conjunction/propagation capabilities available in the Free tier, and maintain linked attribution to upstream open-source astrodynamics code used in OrbPro (without maintaining a separate standalone library)
+8. **Software Distribution**: Ship Lobsternaut software as a NanoClaw-compatible client with embedded SDN node, pluggable inference providers, and SpaceAware AI subscription-gated MCP automation
 
 ---
 
@@ -135,38 +137,35 @@ This approach enables true marketplace liquidity for time and capability itself,
 
 ---
 
-## 6. Crypto Wallet Ecosystem
+## 6. Lobsternaut Software (NanoClaw Clone)
 
-Strategic default: `hd-wallet-wasm` and `hd-wallet-ui` remain general-purpose crypto-wallet components, not domain-specific forks.
+Strategic default: ship `Lobsternaut` software as a NanoClaw-compatible client focused on SDN connectivity + AI-assisted mission workflows.
 
-### 6.1 Core Wallet Direction
+### 6.1 Embedded SDN Node
 
-- Keep wallet primitives standards-compliant (key derivation, signing flows, recovery, multi-chain support).
-- Keep UX parity with mainstream wallets to reduce onboarding friction.
-- Add Lobsternaut-specific signing permissions for orbital capability NFTs and command execution only where explicitly requested.
+- Every running Lobsternaut client includes an embedded Space Data Network node by default.
+- Users can connect immediately to SDN without separately provisioning node infrastructure.
+- Node mode supports both lightweight client participation and full relay/operator configuration.
 
-### 6.2 Multi-Client Delivery
+### 6.2 Bring-Your-Own Inference Provider
 
-- **hd-wallet-ui** as browser-first wallet UI baseline
-- **Chrome extension** for web dApp signing and secure session approvals
-- **Apple / Android apps** for full wallet + marketplace workflows
-- **Apple Watch / Samsung watch app** for lightweight mission actions and status checks
+- Lobsternaut users choose their own inference provider:
+  - Local inference (self-hosted models)
+  - Paid hosted inference APIs
+- Provider abstraction keeps prompt orchestration/provider switching inside the client runtime.
+- No hard dependency on a single inference vendor.
 
-### 6.3 Watch-First Use Cases
+### 6.3 SpaceAware AI Subscription + Embedded MCP
 
-- Buy recurring Starlink-like service access rights from watch
-- Purchase `TimeSlotCapability` for SAR imaging (ex: “Paris” sample mission)
-- Sign command packet and receive encrypted execution state
-- View telemetry confirmation and settlement status
+- SpaceAware AI subscription unlocks embedded MCP capabilities in Lobsternaut.
+- Embedded MCP provides the same mission/analysis workflow automation currently associated with per-token access paths.
+- AI subscription status gates MCP-enabled automations, while non-subscribers can still run baseline non-MCP workflows.
 
-### 6.4 Ecosystem Goal
+### 6.4 Entitlement Direction
 
-Create one trusted control plane where desktop, browser, mobile, and wearables operate on the same entitlement model:
-
-- one wallet identity
-- one capability market account
-- one policy and key hierarchy
-- no additional onboarding burden beyond familiar crypto flows
+- AI workflow access is subscription-based (SpaceAware AI), not per-token gated.
+- Token utility remains for marketplace settlement/discount/governance.
+- Capability NFTs and network commerce continue to operate under existing listing/settlement rules.
 
 ---
 
@@ -176,8 +175,9 @@ Payment implementation details now live in `docs/design-docs/payment-integration
 
 Implementation defaults remain:
 
-- Stripe + Coinbase Commerce power checkout for Lobsternaut subscription tiers and network offerings
+- Stripe + Coinbase Commerce power checkout for Lobsternaut subscription tiers, including SpaceAware AI subscription
 - Entitlement is resolved by active tier plus purchase receipt/ownership proofs after webhook confirmation
+- MCP-enabled AI automation is unlocked by AI subscription status
 - Settlement supports card and crypto flows
 
 ## 8. Tiered Access Model
@@ -193,13 +193,14 @@ Operational defaults align to the pitch deck at `https://digitalarsenal.github.i
 | Analyst | $20/mo | per seat | 100 scenarios, Basilisk simulator, Lambert/Hohmann planning, sensor FOV, API access (25K/day) |
 | Operator | $30/mo | per seat | Monte Carlo, missile trajectory, launch/reentry, 500 scenarios, operator chat, CA workflow |
 | Mission | $40/mo | per seat | RPO/proximity ops, combat sim, EW, multi-domain, sensor fusion/fire control, unlimited scenarios |
-| AI Enabled | $70 baseline (usage-based) | usage-based | AI copilots, autonomous workflow automation, priority AI compute, all Mission capabilities |
+| AI Enabled | $70 baseline (usage-based) | usage-based | SpaceAware AI subscription, embedded MCP workflows, AI copilots, autonomous workflow automation, priority AI compute, all Mission capabilities |
 
 Additional policy:
 - Annual billing: pay for 10 months, receive 12
 - Volume discounts for 5+ seats
 - AI Enabled pricing baseline is set to 1.75x the current highest fixed tier ($40 Mission → $70 baseline)
 - No usage-credit system; capability access is tier-based (plus AI usage pricing)
+- AI automation entitlements use subscription checks rather than per-token gating
 
 ---
 
@@ -233,6 +234,7 @@ Lobsternaut will establish a multi-platform presence targeting aerospace enginee
 
 - Define OrbPro codebase layout in this repository (no separate standalone library repo)
 - Create and publish OrbPro upstream source links in `docs/references/orbpro-upstream-sources.md`
+- Define Lobsternaut software scope as NanoClaw-compatible client runtime
 - Define bot personality and create branding assets (logo, banners)
 - **Deploy Base token via Bankr/Clanker** (priority: immediate liquidity)
 - Create social media accounts across all platforms
@@ -242,6 +244,8 @@ Lobsternaut will establish a multi-platform presence targeting aerospace enginee
 ### Phase 2: Core Development (Weeks 5-12)
 
 - Implement OrbPro core modules: Propagation, Coordinates, Optimization
+- Build Lobsternaut software shell with embedded SDN node startup/health controls
+- Add inference provider abstraction (local + paid providers)
 - **Build Conjunction Assessment module (flagship feature)**
 - Set up Emscripten WASM build pipeline
 - Create JavaScript API wrapper with TypeScript definitions
@@ -255,6 +259,8 @@ Lobsternaut will establish a multi-platform presence targeting aerospace enginee
 - Deploy Ethereum mainnet ERC-20 token
 - Integrate Coinbase Commerce for crypto payments
 - Build tier-based entitlement + purchase-receipt system
+- Integrate SpaceAware AI subscription checks for embedded MCP access
+- Implement embedded MCP client flows for mission/analysis automations
 - Create interactive web demos (orbit visualizer, conjunction analyzer)
 - Add capability command-signing and telemetry encryption flows
 - Add displacement/compensation marketplace logic
@@ -292,11 +298,12 @@ Lobsternaut will establish a multi-platform presence targeting aerospace enginee
 1. **Token Sales**: Initial liquidity from Base/Solana/ETH token launches
 2. **Lobsternaut Data Products**: paid orbital datasets, alerts, and analytics feeds sold on-network
 3. **Lobsternaut Service Endpoints**: hosted compute/workflow services billed by usage
-4. **Lobsternaut NFT Storefront**: primary capability listings and secondary royalties
-5. **Transaction Fees**: 0.5% burn on token transfers (deflationary revenue capture)
-6. **Enterprise Licensing**: custom OrbPro integrations for satellite operators ($5K-$50K contracts)
-7. **Compensation Market Fees**: optional escrow and displacement-settlement service revenue
-8. **Wallet Ecosystem**: premium wallet features, connector fees, device sync and signing operations
+4. **SpaceAware AI Subscriptions**: AI-enabled Lobsternaut workflows (embedded MCP entitlement)
+5. **Lobsternaut NFT Storefront**: primary capability listings and secondary royalties
+6. **Transaction Fees**: 0.5% burn on token transfers (deflationary revenue capture)
+7. **Enterprise Licensing**: custom OrbPro integrations for satellite operators ($5K-$50K contracts)
+8. **Compensation Market Fees**: optional escrow and displacement-settlement service revenue
+9. **Wallet Ecosystem**: premium wallet features, connector fees, device sync and signing operations
 
 ### 11.2 12-Month Revenue Projection
 
@@ -313,7 +320,7 @@ Conservative projection reaching $50K-$75K monthly recurring revenue within 12 m
 
 ## 12. Conclusion & Next Steps
 
-Lobsternaut represents a unique convergence of aerospace engineering, source-transparent software development, and Web3 economics. By building professional-grade astrodynamics tools (OrbPro) with tiered SaaS access and on-network commerce, the project bridges the gap between crypto-native communities and mainstream satellite operators.
+Lobsternaut represents a unique convergence of aerospace engineering, source-transparent software development, and Web3 economics. By building professional-grade astrodynamics tools (OrbPro) with tiered SaaS access, embedded SDN+MCP software, and on-network commerce, the project bridges the gap between crypto-native communities and mainstream satellite operators.
 
 ### Key Differentiators
 
@@ -323,15 +330,16 @@ Lobsternaut represents a unique convergence of aerospace engineering, source-tra
 - **Fiat On-Ramps**: Stripe and Coinbase Commerce enable mainstream adoption without crypto barriers
 - **Critical Problem**: Conjunction assessment addresses the growing space debris crisis threatening satellite operations
 - **Source Transparency**: OrbPro includes clear links and attribution to upstream open-source astrodynamics code used in its implementation
+- **Software Control Plane**: Lobsternaut software ships with embedded SDN node + BYO inference provider + AI-subscription MCP automation
 
 ### Immediate Action Items
 
 1. **Deploy Base token this week** using Bankr (similar to KellyClaude example)
-2. Set up Chrome extension wallet baseline for Lobsternaut signing + approvals
-3. Begin OrbPro core architecture design in-repo (no separate standalone library maintenance)
+2. Define Lobsternaut software architecture as NanoClaw-compatible client + embedded SDN node
+3. Implement inference provider adapter layer (local + paid) for Lobsternaut runtime
 4. Create Discord server with token-gating infrastructure
-5. Design `TimeSlotCapability` metadata schema + compensation policy
-6. Draft tokenomics and capability whitepaper for community transparency
+5. Integrate SpaceAware AI subscription entitlement with embedded MCP
+6. Design `TimeSlotCapability` metadata schema + compensation policy
 
 ---
 

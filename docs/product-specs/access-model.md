@@ -20,21 +20,23 @@ There is no usage-credit system. Capability access is determined by the active t
 | Analyst | $20/mo per seat | 100 scenarios, Basilisk simulator, Lambert/Hohmann planning, sensor FOV, API access (25K/day) |
 | Operator | $30/mo per seat | Monte Carlo, missile trajectory, launch/reentry, 500 scenarios, operator chat, CA workflow |
 | Mission | $40/mo per seat | RPO/proximity ops, combat sim, EW, multi-domain, sensor fusion/fire control, unlimited scenarios |
-| AI Enabled | $70 baseline (usage-based) | AI copilots, autonomous workflow automation, priority AI compute, all Mission capabilities |
+| AI Enabled | $70 baseline (usage-based) | SpaceAware AI subscription, embedded MCP workflows, AI copilots, autonomous workflow automation, priority AI compute, all Mission capabilities |
 
 Commercial terms:
 - Annual billing: pay for 10 months, receive 12
 - Volume discounts for 5+ seats
 - AI Enabled baseline pricing: 1.75x the highest fixed tier ($40 Mission -> $70 baseline), billed by usage
+- AI automation access is unlocked by SpaceAware AI subscription (not token-balance gating)
 
 ## Entitlement Logic
 
 ```text
 1. Resolve user's active subscription entitlement and renewal status
-2. Map account to highest active tier (Free if no paid entitlement)
-3. Resolve requested operation's minimum required tier
-4. If user tier >= required tier: allow
-5. Else: return required-tier upgrade guidance
+2. If operation requires embedded MCP: verify SpaceAware AI subscription is active
+3. Map account to highest active tier (Free if no paid entitlement)
+4. Resolve requested operation's minimum required tier
+5. If user tier >= required tier: allow
+6. Else: return required-tier upgrade guidance
 ```
 
 ## Rate Limiting
